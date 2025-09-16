@@ -73,10 +73,10 @@ const presetVariants: Record<
     container: defaultContainerVariants,
     item: {
       hidden: { opacity: 0, filter: 'blur(8px)' },
-      visible: { 
-        opacity: 1, 
+      visible: {
+        opacity: 1,
         filter: 'blur(0px)',
-        transition: { 
+        transition: {
           duration: 0.4,
           ease: [0.25, 0.1, 0.25, 1.0]
         }
@@ -88,11 +88,11 @@ const presetVariants: Record<
     container: defaultContainerVariants,
     item: {
       hidden: { opacity: 0, y: 15, filter: 'blur(8px)' },
-      visible: { 
-        opacity: 1, 
-        y: 0, 
+      visible: {
+        opacity: 1,
+        y: 0,
         filter: 'blur(0px)',
-        transition: { 
+        transition: {
           duration: 0.5,
           ease: [0.25, 0.1, 0.25, 1.0]
         }
@@ -104,10 +104,10 @@ const presetVariants: Record<
     container: defaultContainerVariants,
     item: {
       hidden: { opacity: 0, scale: 0.9 },
-      visible: { 
-        opacity: 1, 
+      visible: {
+        opacity: 1,
         scale: 1,
-        transition: { 
+        transition: {
           duration: 0.4,
           ease: [0.34, 1.56, 0.64, 1]
         }
@@ -119,10 +119,10 @@ const presetVariants: Record<
     container: defaultContainerVariants,
     item: {
       hidden: { opacity: 0, y: 8 },
-      visible: { 
-        opacity: 1, 
+      visible: {
+        opacity: 1,
         y: 0,
-        transition: { 
+        transition: {
           duration: 0.4,
           ease: [0.25, 0.1, 0.25, 1.0]
         }
@@ -266,12 +266,12 @@ export function TextEffect({
 
   const customStagger = hasTransition(variants?.container?.visible ?? {})
     ? (variants?.container?.visible as TargetAndTransition).transition
-        ?.staggerChildren
+      ?.staggerChildren
     : undefined;
 
   const customDelay = hasTransition(variants?.container?.visible ?? {})
     ? (variants?.container?.visible as TargetAndTransition).transition
-        ?.delayChildren
+      ?.delayChildren
     : undefined;
 
   const computedVariants = {

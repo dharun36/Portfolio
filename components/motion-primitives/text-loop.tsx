@@ -49,16 +49,16 @@ export function TextLoop({
 
   const motionVariants: Variants = {
     initial: { y: 15, opacity: 0 },
-    animate: { 
-      y: 0, 
+    animate: {
+      y: 0,
       opacity: 1,
       transition: {
         duration: 0.4,
         ease: [0.25, 0.1, 0.25, 1.0]
       }
     },
-    exit: { 
-      y: -15, 
+    exit: {
+      y: -15,
       opacity: 0,
       transition: {
         duration: 0.3,

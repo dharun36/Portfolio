@@ -1,5 +1,5 @@
 /*
-	Installed from https://reactbits.dev/ts/tailwind/
+  Installed from https://reactbits.dev/ts/tailwind/
 */
 
 import { useRef, useEffect, useState, ReactNode } from "react";

@@ -1,0 +1,22 @@
+/* Add this to the top of your globals.css file */
+
+/* No-JS fallback styles to prevent CLS */
+html.no-js .animate-fade-in,
+html.no-js [data-animate],
+html.no-js .text-effect {
+  opacity: 1 !important;
+  transform: none !important;
+  visibility: visible !important;
+}
+
+/* Size reservation for animated components */
+.text-loop-container {
+  min-height: 1.2em;
+  display: block;
+}
+
+/* Font display settings to prevent FOIT */
+@font-face {
+  font-display: swap;
+  /* Use font-display: swap for all custom fonts */
+}

@@ -47,7 +47,7 @@
 
   .dark {
     --background: 0 0% 0%;
-    /* --background: 251, 22%, 11%; */
+    /* --background: 251, 22%, 0%; */
     --foreground: 0 0% 98%;
     /* --foreground: 250, 15%, 61%; This line is necessary to ensure text is readable in dark mode */
     --text-color: white;

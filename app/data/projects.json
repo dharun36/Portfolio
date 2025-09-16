@@ -1,0 +1,98 @@
+[
+  {
+    "id": 1,
+    "title": "Smart Home Dashboard",
+    "description": "A comprehensive IoT dashboard for smart home control using React. Features real-time data visualization, device control panels, and customizable user interfaces.",
+    "tech": "React, Redux, TypeScript, Chart.js",
+    "features": [
+      "Real-time device monitoring",
+      "Responsive design for all devices",
+      "Energy usage analytics",
+      "Custom automation setup"
+    ],
+    "image": "https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?q=80&w=2560&auto=format&fit=crop",
+    "githubUrl": "https://github.com/username/smart-home",
+    "liveUrl": "https://smart-home-demo.vercel.app",
+    "category": "Web App"
+  },
+  {
+    "id": 2,
+    "title": "AI Image Generator",
+    "description": "An advanced image generation application using stable diffusion models to create high-quality images from text descriptions. Integrates multiple AI models for diverse artistic styles.",
+    "tech": "Next.js, Tailwind CSS, Stable Diffusion API, Python",
+    "features": [
+      "Text-to-image generation",
+      "Style transfer capabilities",
+      "Batch processing",
+      "Custom model fine-tuning"
+    ],
+    "image": "https://images.unsplash.com/photo-1524673278499-6c3b145e97c3?q=80&w=2506&auto=format&fit=crop",
+    "githubUrl": "https://github.com/username/ai-image-generator",
+    "liveUrl": "https://ai-image-generator.vercel.app",
+    "category": "AI Application"
+  },
+  {
+    "id": 3,
+    "title": "Crypto Portfolio Tracker",
+    "description": "A real-time cryptocurrency portfolio tracker with advanced analytics. Track investments, analyze performance, and get market insights with customizable alerts and reports.",
+    "tech": "Python, Flask, MongoDB, WebSockets",
+    "features": [
+      "Real-time price updates",
+      "Portfolio analytics",
+      "Trading history visualization",
+      "Price alert system"
+    ],
+    "image": "https://images.unsplash.com/photo-1621501103258-d0357c36356f?q=80&w=2574&auto=format&fit=crop",
+    "githubUrl": "https://github.com/username/crypto-tracker",
+    "liveUrl": "https://crypto-portfolio-tracker.herokuapp.com",
+    "category": "Finance Tool"
+  },
+  {
+    "id": 4,
+    "title": "E-Learning Platform",
+    "description": "A comprehensive e-learning platform with course creation tools, student progress tracking, and integrated assessment systems. Features video content delivery and interactive quizzes.",
+    "tech": "Node.js, Express, MongoDB, React",
+    "features": [
+      "Video course creation",
+      "Student progress tracking",
+      "Interactive assessments",
+      "Certificate generation"
+    ],
+    "image": "https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=2670&auto=format&fit=crop",
+    "githubUrl": "https://github.com/username/e-learning",
+    "liveUrl": "https://e-learning-demo.netlify.app",
+    "category": "Education Platform"
+  },
+  {
+    "id": 5,
+    "title": "Health & Fitness Tracker",
+    "description": "A comprehensive health and fitness application that tracks workouts, nutrition, and wellness metrics. Includes customizable workout plans and nutrition logging.",
+    "tech": "React Native, Firebase, GraphQL",
+    "features": [
+      "Workout planning and tracking",
+      "Nutrition diary and analysis",
+      "Progress visualization",
+      "Goal setting and achievements"
+    ],
+    "image": "https://images.unsplash.com/photo-1461773518188-b3e86f98242f?q=80&w=2535&auto=format&fit=crop",
+    "githubUrl": "https://github.com/username/fitness-tracker",
+    "liveUrl": "https://fitness-app-showcase.vercel.app",
+    "category": "Mobile App"
+  },
+  {
+    "id": 6,
+    "title": "Social Media Analytics Tool",
+    "description": "Advanced social media analytics dashboard for marketing professionals. Track engagement across platforms, analyze audience demographics, and generate comprehensive reports.",
+    "tech": "TypeScript, GraphQL, D3.js, PostgreSQL",
+    "features": [
+      "Cross-platform analytics",
+      "Audience segmentation",
+      "Engagement metrics",
+      "Automated reporting"
+    ],
+    "image": "https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=2670&auto=format&fit=crop",
+    "githubUrl": "https://github.com/username/social-analytics",
+    "liveUrl": "https://social-analytics-platform.vercel.app",
+    "category": "Analytics Tool"
+  }
+]

@@ -1,9 +1,8 @@
-/*
-  Installed from https://reactbits.dev/ts/tailwind/
-*/
+"use client";
 
-import React, { ReactNode, useLayoutEffect, useRef, useCallback } from "react";
-import Lenis from "lenis";
+import React, { useLayoutEffect, useRef, useCallback, ReactNode } from 'react';
+import Lenis from 'lenis';
+import './ScrollStack.css';
 
 export interface ScrollStackItemProps {
   itemClassName?: string;
@@ -17,7 +16,7 @@ export const ScrollStackItem: React.FC<ScrollStackItemProps> = ({
   style,
 }) => (
   <div
-    className={`scroll-stack-card relative h-96 sm:mx-2 lg:mx-32 my-8 p-12 rounded-[40px] shadow-[0_0_30px_rgba(0,0,0,0.1)] dark:shadow-[0_0_30px_rgba(160,160,160,0.1)] box-border origin-top will-change-transform ${itemClassName}`.trim()}
+    className={`scroll-stack-card relative h-96 sm:mx-2 lg:mx-32 my-8 p-3 rounded-[40px] shadow-[0_0_30px_rgba(0,0,0,0.1)] dark:shadow-[0_0_30px_rgba(160,160,160,0.1)] box-border origin-top will-change-transform ${itemClassName}`.trim()}
     style={{
       backfaceVisibility: "hidden",
       transformStyle: "preserve-3d",
@@ -40,6 +39,7 @@ interface ScrollStackProps {
   scaleDuration?: number;
   rotationAmount?: number;
   blurAmount?: number;
+  useWindowScroll?: boolean;
   onStackComplete?: () => void;
 }
 
@@ -55,6 +55,7 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
   scaleDuration = 0.5,
   rotationAmount = 0,
   blurAmount = 0,
+  useWindowScroll = false,
   onStackComplete,
 }) => {
   const scrollerRef = useRef<HTMLDivElement>(null);
@@ -62,6 +63,7 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
   const animationFrameRef = useRef<number | null>(null);
   const lenisRef = useRef<Lenis | null>(null);
   const cardsRef = useRef<HTMLElement[]>([]);
+  const endElementRef = useRef<HTMLDivElement>(null);
   const lastTransformsRef = useRef(new Map<number, any>());
   const isUpdatingRef = useRef(false);
 
@@ -77,19 +79,46 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
     }
     return parseFloat(value as string);
   }, []);
+  
+  const getScrollData = useCallback(() => {
+    if (useWindowScroll) {
+      return {
+        scrollTop: window.scrollY,
+        containerHeight: window.innerHeight,
+        scrollContainer: document.documentElement
+      };
+    } else {
+      const scroller = scrollerRef.current;
+      return {
+        scrollTop: scroller ? scroller.scrollTop : 0,
+        containerHeight: scroller ? scroller.clientHeight : 0,
+        scrollContainer: scroller
+      };
+    }
+  }, [useWindowScroll]);
+
+  const getElementOffset = useCallback(
+    (element: HTMLElement) => {
+      if (useWindowScroll) {
+        const rect = element.getBoundingClientRect();
+        return rect.top + window.scrollY;
+      } else {
+        return element.offsetTop;
+      }
+    },
+    [useWindowScroll]
+  );
 
   const updateCardTransforms = useCallback(() => {
-    const scroller = scrollerRef.current;
-    if (!scroller || !cardsRef.current.length || isUpdatingRef.current) return;
+    if (!cardsRef.current.length || isUpdatingRef.current) return;
 
     isUpdatingRef.current = true;
 
-    const scrollTop = scroller.scrollTop;
-    const containerHeight = scroller.clientHeight;
+    const { scrollTop, containerHeight, scrollContainer } = getScrollData();
     const stackPositionPx = parsePercentage(stackPosition, containerHeight);
     const scaleEndPositionPx = parsePercentage(scaleEndPosition, containerHeight);
-    const endElement = scroller.querySelector('.scroll-stack-end') as HTMLElement;
-    const endElementTop = endElement ? endElement.offsetTop : 0;
+    const endElement = endElementRef.current;
+    const endElementTop = endElement ? getElementOffset(endElement) : 0;
 
     cardsRef.current.forEach((card, i) => {
       if (!card) return;
@@ -192,7 +221,7 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
       wrapper: scroller,
       content: scroller.querySelector('.scroll-stack-inner') as HTMLElement,
       duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
       touchMultiplier: 2,
       infinite: false,
@@ -321,7 +350,7 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
       <div className="scroll-stack-inner pt-[20vh] sm:px-15 lg:px-20 pb-[10rem] min-h-screen">
         {children}
         {/* Spacer so the last pin can release cleanly */}
-        <div className="scroll-stack-end w-full h-px" />
+        <div className="scroll-stack-end w-full h-px" ref={endElementRef} />
       </div>
     </div>
   );

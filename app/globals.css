@@ -9,6 +9,13 @@
   --font-mono: var(--font-geist-mono);
 }
 
+/* Custom CSS for vertical text */
+.vertical-text {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  white-space: nowrap;
+}
+
 
 
 @layer base {
@@ -120,6 +127,53 @@ body {
 /* For Firefox */
 * {
   scrollbar-width: none;
+}
+
+/* Marquee animation for tech stack */
+@keyframes marquee-left {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes marquee-right {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.animate-marquee-left {
+  animation: marquee-left 20s linear infinite;
+}
+
+.animate-marquee-right {
+  animation: marquee-right 20s linear infinite;
+}
+
+.marquee-container {
+  overflow: hidden;
+  white-space: nowrap;
+  width: 100%;
+}
+
+.marquee-row:hover .animate-marquee-left,
+.marquee-row:hover .animate-marquee-right {
+  animation-play-state: paused;
+}
+
+.marquee-row:hover {
+  background-color: rgba(17, 24, 39, 0.8);
+  box-shadow: 0 0 15px rgba(30, 64, 175, 0.25);
+  transition: all 0.3s ease;
+  border: 1px solid rgba(30, 64, 175, 0.2);
 }
 
 /* For IE/Edge */

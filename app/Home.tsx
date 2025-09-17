@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from "@/components/ui/button";
-import { ChevronRightIcon } from "lucide-react";
+import { ChevronRightIcon, Component } from "lucide-react";
 import { TextLoop } from '@/components/motion-primitives/text-loop';
 import { motion } from 'framer-motion';
 
@@ -15,12 +15,11 @@ function Home() {
             </span>
           </div>
 
-          <div className='text-4xl md:text-5xl font-bold tracking-tight h-[60px] mb-0'>
-            <h1 className="relative z-10 text-lg md:text-6xl  bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-gray-300  text-center font-sans font-bold">
+          <div className='text-4xl md:text-5xl font-bold tracking-tight h-[25px] md:h-[40px] mb-0'>
+            <h1 className="relative z-10 text-4xl md:text-6xl  bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-gray-400  text-center font-sans font-bold">
               DHARUN R
             </h1>
           </div>
-
           <div className='mt-2 mb-6 flex items-center text-3xl h-[60px]'>
             <div className="flex items-center">
               <span className="whitespace-nowrap">I'm a</span> <b className="ml-2 inline-flex">
@@ -54,37 +53,30 @@ function Home() {
             </div>
           </div>
 
-          <motion.p
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
+          <p
             className="mb-8 leading-relaxed text-base md:text-lg max-w-2xl"
           >
             Copper mug try-hard pitchfork pour-over freegan heirloom neutra air plant
             cold-pressed tacos poke beard tote bag. Heirloom echo park mlkshk tote bag selvage hot chicken authentic
             tumeric truffaut hexagon try-hard chambray.
-          </motion.p>
+          </p>
 
           <div className="flex md:justify-start justify-center gap-4">
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.5 }}
-            >
-              <Button className='px-6 mr-3 text-sm font-medium h-12 bg-[#3367d6] text-white hover:bg-[#3367d6] dark:bg-[#3b82f6] dark:text-white dark:hover:bg-[#3b82f6] transition-colors duration-300' style={{ borderRadius: 999 }}>
+            <div>
+              <Button className='px-6 mr-3 text-sm font-medium h-12  transition-colors duration-300' style={{ borderRadius: 999 }}>
                 View My Work
               </Button>
-              <Button className='px-8 mx-3 text-sm text-blue-400 hover:text-blue-400 font-medium h-12 bg-transparent hover:bg-[#3b82f6]/10 dark:hover:bg-[#60a5fa]/10 border-[#4885ed] dark:border-[#60a5fa] transition-colors duration-300' style={{ borderRadius: 999 }} variant="outline">
+              <Button className='px-8 mx-3 text-sm font-medium h-12 bg-transparent border border-white transition-colors duration-300' style={{ borderRadius: 999 }} variant="outline">
                 Resume
               </Button>
-            </motion.div>
+            </div>
           </div>
         </div>
         <motion.div
           className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6"
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.4, duration: 0.5 }}
+          transition={{ delay: 0, duration: 0}}
         >
           <img
             className="object-cover object-center rounded-lg shadow-md"

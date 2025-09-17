@@ -12,9 +12,11 @@ export default function About() {
         viewOptions={{ margin: '0px 0px -200px 0px' }}
         transition={{ duration: 0.3, ease: 'easeInOut' }}
       >
-        <section id="about" className="py-24 mt-36" >
+        <section id="about" className="py-24 mt-36 mb-14">
           <div className="my-10 max-w-3xl mx-auto text-center">
-            <h2 className="py-5 text-4xl md:text-4xl font-bold text-gray-900 dark:text-white mb-6">About Me</h2>
+            <h1 className="relative z-10 text-3xl lg:text-5xl pb-10 bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-gray-400  text-center font-sans font-bold">
+              About Me
+            </h1>
             <div className="space-y-4 text-lg text-gray-700 dark:text-gray-300">
               <p>
                 I thrive on building intelligent, user-friendly, and impactful digital solutions. With a strong foundation in web development, machine learning, and deep learning, I enjoy combining technology and creativity to solve real-world problems.

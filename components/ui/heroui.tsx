@@ -25,10 +25,10 @@ const textVariants: Variants = {
   visible: {
     y: 0,
     opacity: 1,
-    transition: { 
-      type: "spring" as const, 
-      stiffness: 120, 
-      damping: 15 
+    transition: {
+      type: "spring" as const,
+      stiffness: 120,
+      damping: 15
     },
   },
 };

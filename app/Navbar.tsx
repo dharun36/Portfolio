@@ -8,6 +8,8 @@ import { ModeToggle } from "./toggle";
 const navLinks = [
   { name: "About", href: "#about" },
   { name: "Projects", href: "#projects" },
+  { name: "Certifications", href: "#certifications" },
+  { name: "Contributions", href: "#contributions" },
   { name: "Contact", href: "#contact" },
 ];
 

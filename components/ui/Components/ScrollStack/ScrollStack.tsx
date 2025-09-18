@@ -17,10 +17,11 @@ export const ScrollStackItem: React.FC<ScrollStackItemProps> = ({
   style,
 }) => (
   <div
-    className={`scroll-stack-card relative h-96 sm:mx-4 md:mx-8 lg:mx-32 my-8 rounded-[40px] shadow-[0_0_30px_rgba(0,0,0,0.1)] dark:shadow-[0_0_30px_rgba(160,160,160,0.1)] box-border origin-top will-change-transform ${itemClassName}`.trim()}
+    className={`scroll-stack-card relative h-96 sm:mx-4 md:mx-8 lg:mx-32 my-8 rounded-[40px] shadow-[0_0_30px_rgba(0,0,0,0.1)] dark:shadow-[0_0_30px_rgba(160,160,160,0.1)] box-border origin-top ${itemClassName}`.trim()}
     style={{
       backfaceVisibility: "hidden",
-      transformStyle: "preserve-3d",
+      // Remove preserve-3d for better performance
+      transition: 'none', // Explicitly disable transitions
       ...style,
     }}
   >
@@ -52,7 +53,8 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
   stackPosition = "20%",
   scaleEndPosition = "10%",
   baseScale = 0.85,
-  scaleDuration = 0.5,
+  // Remove unused or transition-related props
+  scaleDuration = 0, // Set to 0 to disable
   rotationAmount = 0,
   blurAmount = 0,
   onStackComplete,
@@ -78,10 +80,12 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
     return parseFloat(value as string);
   }, []);
 
+  // Debounced update function to reduce calculation frequency
   const updateCardTransforms = useCallback(() => {
     const scroller = scrollerRef.current;
     if (!scroller || !cardsRef.current.length || isUpdatingRef.current) return;
 
+    // Prevent multiple simultaneous updates
     isUpdatingRef.current = true;
 
     const scrollTop = scroller.scrollTop;
@@ -100,27 +104,24 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
       const pinStart = cardTop - stackPositionPx - (itemStackDistance * i);
       const pinEnd = endElementTop - containerHeight / 2;
 
-      const scaleProgress = calculateProgress(scrollTop, triggerStart, triggerEnd);
-      const targetScale = baseScale + (i * itemScale);
-      const scale = 1 - scaleProgress * (1 - targetScale);
-      const rotation = rotationAmount ? i * rotationAmount * scaleProgress : 0;
-
-      let blur = 0;
-      if (blurAmount) {
-        let topCardIndex = 0;
-        for (let j = 0; j < cardsRef.current.length; j++) {
-          const jCardTop = cardsRef.current[j].offsetTop;
-          const jTriggerStart = jCardTop - stackPositionPx - (itemStackDistance * j);
-          if (scrollTop >= jTriggerStart) {
-            topCardIndex = j;
-          }
-        }
-
-        if (i < topCardIndex) {
-          const depthInStack = topCardIndex - i;
-          blur = Math.max(0, depthInStack * blurAmount);
+      // Simplify scale calculation - less smooth but more performant
+      let scaleProgress = 0;
+      if (scrollTop >= triggerStart) {
+        if (scrollTop >= triggerEnd) {
+          scaleProgress = 1;
+        } else {
+          // Use simple division instead of calculateProgress for better performance
+          scaleProgress = (scrollTop - triggerStart) / (triggerEnd - triggerStart);
         }
       }
+
+      const targetScale = baseScale + (i * itemScale);
+      const scale = 1 - scaleProgress * (1 - targetScale);
+      // Remove rotation effect
+      const rotation = 0;
+
+      // Remove blur effect entirely
+      const blur = 0;
 
       let translateY = 0;
       const isPinned = scrollTop >= pinStart && scrollTop <= pinEnd;
@@ -139,18 +140,22 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
       };
 
       const lastTransform = lastTransformsRef.current.get(i);
+      // Increase threshold to reduce update frequency - prevents micro-updates that cause glittering
       const hasChanged = !lastTransform ||
-        Math.abs(lastTransform.translateY - newTransform.translateY) > 0.1 ||
-        Math.abs(lastTransform.scale - newTransform.scale) > 0.001 ||
-        Math.abs(lastTransform.rotation - newTransform.rotation) > 0.1 ||
-        Math.abs(lastTransform.blur - newTransform.blur) > 0.1;
+        Math.abs(lastTransform.translateY - newTransform.translateY) > 0.5 ||
+        Math.abs(lastTransform.scale - newTransform.scale) > 0.005 ||
+        Math.abs(lastTransform.rotation - newTransform.rotation) > 0.5 ||
+        Math.abs(lastTransform.blur - newTransform.blur) > 0.5;
 
       if (hasChanged) {
-        const transform = `translate3d(0, ${newTransform.translateY}px, 0) scale(${newTransform.scale}) rotate(${newTransform.rotation}deg)`;
-        const filter = newTransform.blur > 0 ? `blur(${newTransform.blur}px)` : '';
+        // Simplified transform without transition effect
+        const transform = `translate3d(0, ${newTransform.translateY}px, 0) scale(${newTransform.scale})`;
+        // Remove blur effect completely
 
+        // Apply transform directly without transition
         card.style.transform = transform;
-        card.style.filter = filter;
+        card.style.filter = '';
+        card.style.transition = 'none'; // Explicitly disable transitions
 
         lastTransformsRef.current.set(i, newTransform);
       }
@@ -180,7 +185,9 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
     parsePercentage,
   ]);
 
+  // Add throttling to scroll handler to prevent excessive calculations
   const handleScroll = useCallback(() => {
+    if (isUpdatingRef.current) return;
     updateCardTransforms();
   }, [updateCardTransforms]);
 
@@ -191,10 +198,12 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
     const lenis = new Lenis({
       wrapper: scroller,
       content: scroller.querySelector('.scroll-stack-inner') as HTMLElement,
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smoothWheel: true,
-      touchMultiplier: 2,
+      // Remove easing for direct response without transitions
+      duration: 0,
+      easing: (t) => t, // Linear easing (no easing)
+      // Disable smooth scrolling completely
+      smoothWheel: false,
+      touchMultiplier: 1,
       infinite: false,
       gestureOrientation: 'vertical',
       wheelMultiplier: 1,
@@ -227,13 +236,16 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
       if (i < cards.length - 1) {
         card.style.marginBottom = `${itemDistance}px`;
       }
-      card.style.willChange = 'transform, filter';
+      // Remove GPU acceleration hints completely for simpler rendering
+      card.style.willChange = 'auto';
       card.style.transformOrigin = 'top center';
       card.style.backfaceVisibility = 'hidden';
-      card.style.transform = 'translateZ(0)';
-      card.style.webkitTransform = 'translateZ(0)';
-      card.style.perspective = '1000px';
-      card.style.webkitPerspective = '1000px';
+      // Remove 3D transforms
+      card.style.transform = 'none';
+      card.style.webkitTransform = 'none';
+      // Explicitly disable transitions
+      card.style.transition = 'none';
+      card.style.webkitTransition = 'none';
     });
 
     // Do not initialize Lenis for nested scrollers — it captures wheel events and
@@ -243,12 +255,30 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
 
     updateCardTransforms();
 
-    // Native scroll listener to drive transforms (uses rAF to throttle)
+    // Native scroll listener with improved throttling
     let rafId: number | null = null;
+    let lastScrollTime = 0;
+    const scrollThreshold = 32; // ~30fps max update rate
+
     const onScroll = () => {
+      const now = Date.now();
+      if (now - lastScrollTime < scrollThreshold) {
+        // Skip this update if we updated too recently
+        if (!rafId) {
+          rafId = requestAnimationFrame(() => {
+            updateCardTransforms();
+            rafId = null;
+            lastScrollTime = Date.now();
+          });
+        }
+        return;
+      }
+
       if (rafId) cancelAnimationFrame(rafId);
       rafId = requestAnimationFrame(() => {
         updateCardTransforms();
+        rafId = null;
+        lastScrollTime = Date.now();
       });
     };
     scroller.addEventListener('scroll', onScroll, { passive: true });
@@ -310,10 +340,7 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
       style={{
         // allow scroll chaining so parent can scroll when this scroller reaches an edge
         overscrollBehavior: "auto",
-        WebkitOverflowScrolling: 'touch',
-        WebkitTransform: 'translateZ(0)',
-        transform: 'translateZ(0)',
-        willChange: 'scroll-position',
+        // Remove GPU acceleration hints
         msOverflowStyle: 'none',  /* IE and Edge */
         scrollbarWidth: 'none',   /* Firefox */
       }}

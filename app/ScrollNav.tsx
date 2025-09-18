@@ -12,6 +12,14 @@ export function ScrollNav() {
       link: "/about",
     },
     {
+      name: "Projects",
+      link: "/projects",
+    },
+    {
+      name: "Certifications",
+      link: "/certifications",
+    },
+    {
       name: "Contact",
       link: "/contact",
     },

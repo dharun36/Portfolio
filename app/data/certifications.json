@@ -1,0 +1,58 @@
+[
+  {
+    "id": 1,
+    "title": "AWS Certified Solutions Architect",
+    "issuer": "Amazon Web Services",
+    "issueDate": "2025-03-15",
+    "expiryDate": "2028-03-15",
+    "badgeUrl": "/images/certifications/aws-certified-solutions-architect.png",
+    "credentialUrl": "https://www.credly.com/badges/example-credential-id",
+    "skills": [
+      "AWS",
+      "Cloud Architecture",
+      "Infrastructure as Code"
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Microsoft Certified: Azure Developer Associate",
+    "issuer": "Microsoft",
+    "issueDate": "2024-11-20",
+    "expiryDate": "2026-11-20",
+    "badgeUrl": "/images/certifications/azure-developer-associate.png",
+    "credentialUrl": "https://www.credly.com/badges/example-credential-id-azure",
+    "skills": [
+      "Azure",
+      "Cloud Development",
+      ".NET"
+    ]
+  },
+  {
+    "id": 3,
+    "title": "Google Professional Data Engineer",
+    "issuer": "Google Cloud",
+    "issueDate": "2025-01-08",
+    "expiryDate": "2027-01-08",
+    "badgeUrl": "/images/certifications/google-professional-data-engineer.png",
+    "credentialUrl": "https://www.credential.net/example-credential",
+    "skills": [
+      "Google Cloud",
+      "Big Data",
+      "Data Engineering"
+    ]
+  },
+  {
+    "id": 4,
+    "title": "Certified Kubernetes Administrator (CKA)",
+    "issuer": "Cloud Native Computing Foundation",
+    "issueDate": "2024-09-30",
+    "expiryDate": "2027-09-30",
+    "badgeUrl": "/images/certifications/kubernetes-cka.png",
+    "credentialUrl": "https://www.credly.com/badges/example-kubernetes-id",
+    "skills": [
+      "Kubernetes",
+      "Container Orchestration",
+      "DevOps"
+    ]
+  }
+]

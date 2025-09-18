@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Badge } from "@/components/ui/badge";
 import {
   SiReact, SiNextdotjs, SiTypescript, SiJavascript, SiNodedotjs,
   SiTailwindcss, SiPython, SiMongodb, SiRedux, SiGithub,
@@ -67,47 +68,59 @@ export default function AboutTechStackMarquee() {
   };
 
   return (
-    <div className="w-full relative overflow-hidden rounded-lg bg-gray-950/50 p-4">
-
+    <div className="w-full relative overflow-hidden p-1 sm:p-2" style={{ maxWidth: "100%" }}>
+      {/* Categories legend */}
+      <div className="flex justify-center gap-1.5 sm:gap-2 md:gap-4 mb-3 sm:mb-4 md:mb-6 flex-wrap">
+        <Badge className="bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200 px-1.5 sm:px-2 md:px-4 py-0.5 sm:py-1 text-xs sm:text-sm">Frontend</Badge>
+        <Badge className="bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200 px-1.5 sm:px-2 md:px-4 py-0.5 sm:py-1 text-xs sm:text-sm">Backend</Badge>
+        <Badge className="bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200 px-1.5 sm:px-2 md:px-4 py-0.5 sm:py-1 text-xs sm:text-sm">Database</Badge>
+        <Badge className="bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200 px-1.5 sm:px-2 md:px-4 py-0.5 sm:py-1 text-xs sm:text-sm">Tools</Badge>
+      </div>
 
       {/* First row - left to right */}
-      <div className="marquee-row mb-6 p-2 rounded-lg bg-gray-950/70">
-        <div className="marquee-container">
-          <div className="flex animate-marquee-left">
+      <div className="marquee-row mb-4 sm:mb-6 py-5 md:mb-8" style={{ maxWidth: "100%", overflowX: "hidden" }}>
+        <div className="marquee-container" style={{ maxWidth: "100%" }}>
+          <div className="flex animate-marquee-left" style={{ maxWidth: "100%" }}>
             {techLogosRow1.map((tech, index) => (
               <motion.div
                 key={index}
-                className="flex flex-col items-center justify-center mx-6 opacity-70 hover:opacity-100 transition-opacity"
+                className="flex flex-col items-center justify-center mx-2 sm:mx-3 md:mx-5 opacity-80 hover:opacity-100 transition-all group relative"
                 whileHover={{
-                  scale: 1.3,
-                  y: -5,
+                  scale: 1.15,
+                  y: -2,
                   transition: { duration: 0.2 }
                 }}
               >
-                <div className="text-3xl sm:text-4xl" style={{ color: tech.color }}>
+                <div className="text-xl sm:text-2xl md:text-3xl" style={{ color: tech.color }}>
                   {tech.icon}
                 </div>
-                <span className="text-xs mt-1 font-medium" style={{ color: tech.color }}>
+                <motion.span
+                  className="text-xs mt-1 font-medium opacity-0 group-hover:opacity-100 transition-opacity absolute top-full pt-2 whitespace-nowrap"
+                  style={{ color: tech.color }}
+                >
                   {tech.name}
-                </span>
+                </motion.span>
               </motion.div>
             ))}
             {techLogosRow1.map((tech, index) => (
               <motion.div
                 key={`repeat1-${index}`}
-                className="flex flex-col items-center justify-center mx-6 opacity-70 hover:opacity-100 transition-opacity"
+                className="flex flex-col items-center justify-center mx-2 sm:mx-3 md:mx-5 opacity-80 p-1 sm:p-2 hover:opacity-100 transition-all group relative"
                 whileHover={{
-                  scale: 1.3,
-                  y: -5,
+                  scale: 1.15,
+                  y: -2,
                   transition: { duration: 0.2 }
                 }}
               >
-                <div className="text-3xl sm:text-4xl" style={{ color: tech.color }}>
+                <div className="text-xl sm:text-2xl md:text-3xl" style={{ color: tech.color }}>
                   {tech.icon}
                 </div>
-                <span className="text-xs mt-1 font-medium" style={{ color: tech.color }}>
+                <motion.span
+                  className="text-xs mt-1 font-medium opacity-0 group-hover:opacity-100 transition-opacity absolute top-full pt-2 whitespace-nowrap"
+                  style={{ color: tech.color }}
+                >
                   {tech.name}
-                </span>
+                </motion.span>
               </motion.div>
             ))}
           </div>
@@ -115,48 +128,56 @@ export default function AboutTechStackMarquee() {
       </div>
 
       {/* Second row - right to left */}
-      <div className="marquee-row p-2 rounded-lg bg-gray-950/70">
-        <div className="marquee-container">
-          <div className="flex animate-marquee-right">
+      <div className="marquee-row" style={{ maxWidth: "100%", overflowX: "hidden" }}>
+        <div className="marquee-container" style={{ maxWidth: "100%" }}>
+          <div className="flex animate-marquee-right" style={{ maxWidth: "100%" }}>
             {techLogosRow2.map((tech, index) => (
               <motion.div
                 key={index}
-                className="flex flex-col items-center justify-center mx-6 opacity-70 hover:opacity-100 transition-opacity"
+                className="flex flex-col items-center justify-center mx-2 sm:mx-3 md:mx-5 opacity-80 py-1 sm:py-2 hover:opacity-100 transition-all group relative"
                 whileHover={{
-                  scale: 1.3,
-                  y: -5,
+                  scale: 1.15,
+                  y: -2,
                   transition: { duration: 0.2 }
                 }}
               >
-                <div className="text-3xl sm:text-4xl" style={{ color: tech.color }}>
+                <div className="text-xl sm:text-2xl md:text-3xl" style={{ color: tech.color }}>
                   {tech.icon}
                 </div>
-                <span className="text-xs mt-1 font-medium" style={{ color: tech.color }}>
+                <motion.span
+                  className="text-xs mt-1 font-medium opacity-0 group-hover:opacity-100 transition-opacity absolute top-full pt-2 whitespace-nowrap"
+                  style={{ color: tech.color }}
+                >
                   {tech.name}
-                </span>
+                </motion.span>
               </motion.div>
             ))}
             {techLogosRow2.map((tech, index) => (
               <motion.div
                 key={`repeat2-${index}`}
-                className="flex flex-col items-center justify-center mx-6 opacity-70 hover:opacity-100 transition-opacity"
+                className="flex flex-col items-center justify-center mx-2 sm:mx-3 md:mx-5 opacity-80 hover:opacity-100 transition-all group relative"
                 whileHover={{
-                  scale: 1.3,
-                  y: -5,
+                  scale: 1.15,
+                  y: -2,
                   transition: { duration: 0.2 }
                 }}
               >
-                <div className="text-3xl sm:text-4xl" style={{ color: tech.color }}>
+                <div className="text-xl sm:text-2xl md:text-3xl" style={{ color: tech.color }}>
                   {tech.icon}
                 </div>
-                <span className="text-xs mt-1 font-medium" style={{ color: tech.color }}>
+                <motion.span
+                  className="text-xs mt-1 font-medium opacity-0 group-hover:opacity-100 transition-opacity absolute top-full pt-2 whitespace-nowrap"
+                  style={{ color: tech.color }}
+                >
                   {tech.name}
-                </span>
+                </motion.span>
               </motion.div>
             ))}
           </div>
         </div>
       </div>
+
+
     </div>
   );
 }

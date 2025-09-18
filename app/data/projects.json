@@ -46,53 +46,6 @@
     "githubUrl": "https://github.com/username/crypto-tracker",
     "liveUrl": "https://crypto-portfolio-tracker.herokuapp.com",
     "category": "Finance Tool"
-  },
-  {
-    "id": 4,
-    "title": "E-Learning Platform",
-    "description": "A comprehensive e-learning platform with course creation tools, student progress tracking, and integrated assessment systems. Features video content delivery and interactive quizzes.",
-    "tech": "Node.js, Express, MongoDB, React",
-    "features": [
-      "Video course creation",
-      "Student progress tracking",
-      "Interactive assessments",
-      "Certificate generation"
-    ],
-    "image": "https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=2670&auto=format&fit=crop",
-    "githubUrl": "https://github.com/username/e-learning",
-    "liveUrl": "https://e-learning-demo.netlify.app",
-    "category": "Education Platform"
-  },
-  {
-    "id": 5,
-    "title": "Health & Fitness Tracker",
-    "description": "A comprehensive health and fitness application that tracks workouts, nutrition, and wellness metrics. Includes customizable workout plans and nutrition logging.",
-    "tech": "React Native, Firebase, GraphQL",
-    "features": [
-      "Workout planning and tracking",
-      "Nutrition diary and analysis",
-      "Progress visualization",
-      "Goal setting and achievements"
-    ],
-    "image": "https://images.unsplash.com/photo-1461773518188-b3e86f98242f?q=80&w=2535&auto=format&fit=crop",
-    "githubUrl": "https://github.com/username/fitness-tracker",
-    "liveUrl": "https://fitness-app-showcase.vercel.app",
-    "category": "Mobile App"
-  },
-  {
-    "id": 6,
-    "title": "Social Media Analytics Tool",
-    "description": "Advanced social media analytics dashboard for marketing professionals. Track engagement across platforms, analyze audience demographics, and generate comprehensive reports.",
-    "tech": "TypeScript, GraphQL, D3.js, PostgreSQL",
-    "features": [
-      "Cross-platform analytics",
-      "Audience segmentation",
-      "Engagement metrics",
-      "Automated reporting"
-    ],
-    "image": "https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=2670&auto=format&fit=crop",
-    "githubUrl": "https://github.com/username/social-analytics",
-    "liveUrl": "https://social-analytics-platform.vercel.app",
-    "category": "Analytics Tool"
+  
   }
 ]

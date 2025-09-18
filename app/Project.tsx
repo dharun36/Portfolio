@@ -13,10 +13,10 @@ function Project() {
 
   return (
     <div className="w-full min-h-screen py-24 flex flex-col">
-      <h2 className="text-4xl dark:text-white text-black p-3 md:text-5xl font-bold mb-4 text-center inline-block text-transparent bg-clip-text mx-auto">
+      <h2 className="text-4xl text-black dark:text-white p-3 md:text-5xl font-bold mb-4 text-center mx-auto">
         My Projects
       </h2>
-      <p className="text-center text-lg mb-5 max-w-2xl mx-auto">
+      <p className="text-center text-lg mb-5 max-w-2xl mx-auto text-gray-700 dark:text-gray-300">
         A collection of my recent work spanning web applications, mobile apps, and other software projects
       </p>
 
@@ -28,18 +28,18 @@ function Project() {
               itemClassName="bg-cover bg-center bg-no-repeat min-h-[450px] w-full sm:w-[95%] md:w-[90%] lg:w-[85%] xl:w-[80%] mx-auto"
             >
               <div className={cn(
-                "flex flex-col md:flex-row h-full shadow-lg rounded-3xl overflow-hidden relative z-20 max-w-7xl bg-[linear-gradient(180deg,#f0f0f0,#e5e5e5)] dark:bg-[linear-gradient(180deg,#1f1f1f,#121212)] dark:border-zinc-700"
+                "flex flex-col md:flex-row h-full shadow-lg rounded-3xl overflow-hidden relative z-20 max-w-7xl bg-[linear-gradient(180deg,gray-50,#000000)] dark:bg-[linear-gradient(180deg,#111827,#030712)] dark:border-zinc-800 dark:shadow-[0_4px_20px_rgba(0,0,0,0.4)]"
               )}>
                 {/* Left side - Project details */}
                 <div className="flex-1 px-6 sm:px-8 py-6 flex flex-col md:flex-1 lg:w-[450px] md:max-w-[60%]">
                   <div className="flex-1">
                     <div className="flex items-center space-x-2 mb-1">
-                      <span className="text-sm bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-white px-2.5 py-0.5 rounded-full">
+                      <span className="text-sm bg-gray-800 text-white dark:bg-gray-400 dark:text-gray-900  px-2.5 py-0.5 rounded-full border dark:border-gray-700 ">
                         {project.category}
                       </span>
                     </div>
 
-                    <h3 className="text-2xl md:text-3xl font-bold mb-4 bg-gradient-to-r from-[#4885ed] to-[#3367d6] dark:from-gray-300 dark:to-gray-400 inline-block text-transparent bg-clip-text">
+                    <h3 className="text-2xl md:text-3xl font-bold mb-4 bg-gradient-to-r from-gray-700 to-gray-900 dark:from-gray-400 dark:to-gray-200 inline-block text-transparent bg-clip-text">
 
                       <ShinyText
                         text={project.title}
@@ -54,7 +54,7 @@ function Project() {
                         {project.tech.split(', ').map((tech, idx) => (
                           <div
                             key={idx}
-                            className="text-sm px-3 py-1 rounded-full bg-gray-700 text-gray-200"
+                            className="text-sm px-3 py-1 rounded-full bg-gray-800/10 text-gray-800 dark:bg-gray-200/10 dark:text-gray-200 border border-gray-300 dark:border-gray-700"
                           >
                             {tech}
                           </div>
@@ -69,7 +69,7 @@ function Project() {
 
                     <div className="mb-6">
                       <h4 className="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-2 flex items-center">
-                        <HiOutlineBadgeCheck className="mr-1 text-[#4885ed] dark:text-[#60a5fa]" />
+                        <HiOutlineBadgeCheck className="mr-1 text-gray-700 dark:text-blue-500" />
                         Key Features
                       </h4>
                       <ul className="list-disc list-inside space-y-1 text-sm text-gray-700 dark:text-gray-300">
@@ -78,17 +78,38 @@ function Project() {
                         ))}
                       </ul>
                     </div>
+
+                    {/* Mobile links - only visible on mobile */}
+                    <div className="md:hidden flex justify-end mt-4 space-x-3">
+                      <a
+                        href={project.githubUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-gray-800 dark:text-white text-xl px-3 py-2 bg-gray-200/80 dark:bg-gray-800/80 rounded-full flex items-center transition-colors hover:bg-gray-300 dark:hover:bg-gray-700"
+                      >
+                        <FaGithub />
+                      </a>
+                      <a
+                        href={project.liveUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-gray-800 dark:text-white text-xl px-3 py-2 bg-gray-200/80 dark:bg-gray-800/80 rounded-full flex items-center transition-colors hover:bg-gray-300 dark:hover:bg-gray-700"
+                      >
+                        <FaGlobe />
+                      </a>
+                    </div>
                   </div>
                 </div>
 
                 {/* Right side - Project image */}
-                <div className="md:w-2/5 h-72 md:h-auto relative overflow-hidden md:max-w-[40%]">
+                {/* Right side - Project image - Hidden on mobile */}
+                <div className="hidden md:block md:w-2/5 h-72 md:h-auto relative overflow-hidden md:max-w-[40%]">
                   <div className="absolute top-4 right-4 flex space-x-3 z-10">
                     <a
                       href={project.githubUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-white text-xl px-3 py-2 bg-black/30 backdrop-blur-sm rounded-full flex items-center transition-colors hover:bg-black/50"
+                      className="text-white text-xl px-3 py-2 bg-black/40 backdrop-blur-sm rounded-full flex items-center transition-colors hover:bg-black/60"
                     >
                       <FaGithub />
                     </a>
@@ -96,7 +117,7 @@ function Project() {
                       href={project.liveUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-white text-xl px-3 py-2 bg-black/30 backdrop-blur-sm rounded-full flex items-center transition-colors hover:bg-black/50"
+                      className="text-white text-xl px-3 py-2 bg-black/40 backdrop-blur-sm rounded-full flex items-center transition-colors hover:bg-black/60"
                     >
                       <FaGlobe />
                     </a>
@@ -114,6 +135,9 @@ function Project() {
           <div className="scroll-stack-end"></div>
         </ScrollStack>
       </div>
+
+      {/* View More Projects Button */}
+
     </div>
   );
 }

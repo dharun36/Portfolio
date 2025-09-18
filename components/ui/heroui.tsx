@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState, useRef } from "react";
-import { motion, useTransform, useScroll } from "framer-motion";
+import { motion, useTransform, useScroll, type Variants } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import LustreText from "@/components/ui/lustretext";
@@ -8,7 +8,7 @@ import { useTheme } from "next-themes";
 import Globe from "@/components/ui/globe";
 import { cn } from "@/lib/utils";
 
-const containerVariants = {
+const containerVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
@@ -20,12 +20,16 @@ const containerVariants = {
   },
 };
 
-const textVariants = {
+const textVariants: Variants = {
   hidden: { y: 40, opacity: 0 },
   visible: {
     y: 0,
     opacity: 1,
-    transition: { type: "spring", stiffness: 120, damping: 15 },
+    transition: { 
+      type: "spring" as const, 
+      stiffness: 120, 
+      damping: 15 
+    },
   },
 };
 

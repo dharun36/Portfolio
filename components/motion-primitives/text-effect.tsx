@@ -10,7 +10,7 @@ import type {
   Variant,
   Variants,
 } from 'motion/react'
-import React from 'react';
+import React, { ElementType } from 'react';
 
 export type PresetType = 'blur' | 'fade-in-blur' | 'scale' | 'fade' | 'slide';
 
@@ -19,7 +19,7 @@ export type PerType = 'word' | 'char' | 'line';
 export type TextEffectProps = {
   children: string;
   per?: PerType;
-  as?: keyof React.JSX.IntrinsicElements;
+  as?: ElementType;
   variants?: {
     container?: Variants;
     item?: Variants;

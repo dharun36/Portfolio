@@ -2,7 +2,7 @@
 import { InView } from "@/components/ui/in-view";
 import { motion } from 'motion/react';
 
-export function InViewImagesGrid() {
+function InViewImagesGrid() {
   return (
     <div className='h-full w-full overflow-auto'>
       <div className='mb-20 py-12 text-center text-sm'>Scroll down</div>
@@ -58,6 +58,14 @@ export function InViewImagesGrid() {
           </div>
         </InView>
       </div>
+    </div>
+  );
+}
+
+export default function ProjectPage() {
+  return (
+    <div className="project-page-container">
+      <InViewImagesGrid />
     </div>
   );
 }

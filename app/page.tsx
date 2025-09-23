@@ -9,7 +9,7 @@ import About from './about';
 import Project from './Project';
 import { ScrollNav } from './ScrollNav';
 import Footer from './Footer';
-import { ExpandableCardDemo } from './components/ExpandableCardDemo';
+import CertificationsShowcase from './components/CertificationsShowcase';
 import CodeContributions from './components/CodeContributions';
 import ContactPage from './components/ContactPage';
 
@@ -78,14 +78,8 @@ export default function Page() {
             </a>
           </div>
         </div>
-        <div id="certifications" className="relative w-full py-12 sm:py-16 md:py-24">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl text-black dark:text-white p-2 sm:p-3 font-bold mb-2 sm:mb-4 text-center mx-auto">
-            Certifications
-          </h2>
-          <p className="text-center text-sm sm:text-base md:text-lg mb-6 sm:mb-10 max-w-xl sm:max-w-2xl mx-auto px-4 text-gray-700 dark:text-gray-300">
-            Industry recognized certifications validating my expertise and technical knowledge
-          </p>
-          <ExpandableCardDemo />
+        <div id="certifications" className="relative w-full">
+          <CertificationsShowcase />
         </div>
         <div id="contributions" className="relative">
           <CodeContributions />

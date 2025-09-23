@@ -47,15 +47,15 @@ const ContactPage = () => {
       <h2 className="text-3xl sm:text-4xl md:text-5xl text-black dark:text-white p-2 sm:p-3 font-bold mb-2 sm:mb-4 text-center mx-auto">
         Get In Touch
       </h2>
-      <p className="text-center text-sm sm:text-base md:text-lg mb-6 sm:mb-10 max-w-xl sm:max-w-2xl mx-auto px-4 text-gray-700 dark:text-gray-300">
+      <p className="text-center text-sm sm:text-base md:text-lg mb-6 sm:mb-10 max-w-xl sm:max-w-2xl md:max-w-3xl mx-auto px-4 text-gray-700 dark:text-gray-300">
         Have a question or want to work together? Feel free to contact me!
       </p>
 
-      <div className="w-full max-w-lg sm:max-w-2xl md:max-w-3xl lg:max-w-4xl mx-auto px-3 sm:px-6 md:px-12">
+      <div className="w-full max-w-lg sm:max-w-2xl md:max-w-4xl lg:max-w-5xl mx-auto px-3 sm:px-6 md:px-12">
         <div className="flex flex-col lg:flex-row gap-10">
           {/* Contact Info */}
           <div className="lg:w-1/3">
-            <div className="bg-gradient-to-br from-white via-[#f8f8f8] to-[#f0f0f0] dark:from-[#111827] dark:via-[#0c1222] dark:to-[#090f1a] p-4 sm:p-6 md:p-8 rounded-lg sm:rounded-xl md:rounded-2xl shadow-lg h-full">
+            <div className="bg-transparent p-4 sm:p-6 md:p-8 rounded-lg sm:rounded-xl md:rounded-2xl shadow-lg h-full">
               <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-800 dark:text-white mb-3 sm:mb-6">Contact Information</h3>
 
               <div className="space-y-3 sm:space-y-6">
@@ -134,13 +134,12 @@ const ContactPage = () => {
           {/* Contact Form */}
           <div className="lg:w-2/3 mt-6 sm:mt-0">
             <motion.div
-              className="bg-gradient-to-br from-white via-[#f8f8f8] to-[#f0f0f0] dark:from-[#111827] dark:via-[#0c1222] dark:to-[#090f1a] p-4 sm:p-6 md:p-8 rounded-lg sm:rounded-xl md:rounded-2xl shadow-lg"
+              className="bg-transparent p-4 sm:p-6 md:p-8 rounded-lg sm:rounded-xl md:rounded-2xl shadow-lg"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
             >
               <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-800 dark:text-white mb-3 sm:mb-6">Send Me a Message</h3>
-
               <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4 md:space-y-5">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 md:gap-5">
                   <div className="space-y-0.5 sm:space-y-1">

@@ -1,13 +1,13 @@
 "use client"
 
 import React from 'react'
-import ShinyText from '@/components/ShinyText.jsx';
 import { FaGithub, FaGlobe } from 'react-icons/fa';
 import { BsCodeSlash } from 'react-icons/bs';
 import { HiOutlineBadgeCheck } from 'react-icons/hi';
 import ScrollStack, { ScrollStackItem } from "@/components/ui/Components/ScrollStack/ScrollStack";
 import projectsData from './data/projects.json';
 import { cn } from "@/lib/utils";
+import ProjectTitle from './ProjectTitle';
 
 function Project() {
 
@@ -39,15 +39,7 @@ function Project() {
                       </span>
                     </div>
 
-                    <h3 className="text-2xl md:text-3xl font-bold mb-4 bg-gradient-to-r from-gray-700 to-gray-900 dark:from-gray-400 dark:to-gray-200 inline-block text-transparent bg-clip-text">
-
-                      <ShinyText
-                        text={project.title}
-                        disabled={false}
-                        speed={3}
-                        className='custom-class'
-                      />
-                    </h3>
+                    <ProjectTitle title={project.title} />
                     <div className="mb-6">
 
                       <div className="flex flex-wrap gap-2">
@@ -104,6 +96,7 @@ function Project() {
                 {/* Right side - Project image */}
                 {/* Right side - Project image - Hidden on mobile */}
                 <div className="hidden md:block md:w-2/5 h-72 md:h-auto relative overflow-hidden md:max-w-[40%]">
+                  {/* Project links */}
                   <div className="absolute top-4 right-4 flex space-x-3 z-10">
                     <a
                       href={project.githubUrl}
@@ -122,6 +115,7 @@ function Project() {
                       <FaGlobe />
                     </a>
                   </div>
+                  {/* Project image */}
                   <img
                     src={project.image}
                     alt={project.title}

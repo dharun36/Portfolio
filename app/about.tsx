@@ -128,9 +128,6 @@ export default function About() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3, duration: 0.6 }}
               >
-                <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800 dark:text-white mb-3 sm:mb-4 md:mb-6 text-center">
-                  Skills
-                </h2>
                 <div className="rounded-xl">
                   <motion.p
                     className="text-sm sm:text-base text-gray-700 dark:text-gray-300 mb-4 sm:mb-6 text-center"
@@ -138,7 +135,7 @@ export default function About() {
                     whileInView={{ opacity: 1 }}
                     transition={{ delay: 0.3, duration: 0.6 }}
                   >
-                    My toolkit for building modern, scalable applications:
+                    My toolkit for building modern, scalable applications
                   </motion.p>
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}

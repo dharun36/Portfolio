@@ -54,5 +54,75 @@
       "Container Orchestration",
       "DevOps"
     ]
+  },
+  {
+    "id": 5,
+    "title": "HashiCorp Certified: Terraform Associate",
+    "issuer": "HashiCorp",
+    "issueDate": "2025-02-12",
+    "expiryDate": "2027-02-12",
+    "badgeUrl": "/images/certifications/aws-logo.png",
+    "credentialUrl": "https://www.credly.com/badges/example-hashicorp-id",
+    "skills": [
+      "Terraform",
+      "Infrastructure as Code",
+      "Cloud Provisioning"
+    ]
+  },
+  {
+    "id": 6,
+    "title": "Certified Jenkins Engineer",
+    "issuer": "CloudBees",
+    "issueDate": "2024-12-05",
+    "expiryDate": "2026-12-05",
+    "badgeUrl": "/images/certifications/aws-logo.png",
+    "credentialUrl": "https://www.credly.com/badges/example-jenkins-id",
+    "skills": [
+      "Jenkins",
+      "CI/CD",
+      "DevOps"
+    ]
+  },
+  {
+    "id": 7,
+    "title": "MongoDB Certified DBA Associate",
+    "issuer": "MongoDB",
+    "issueDate": "2025-04-20",
+    "expiryDate": "2027-04-20",
+    "badgeUrl": "/images/certifications/aws-logo.png",
+    "credentialUrl": "https://www.credly.com/badges/example-mongodb-id",
+    "skills": [
+      "MongoDB",
+      "Database Administration",
+      "NoSQL"
+    ]
+  },
+  {
+    "id": 8,
+    "title": "Docker Certified Associate",
+    "issuer": "Docker",
+    "issueDate": "2025-01-15",
+    "expiryDate": "2028-01-15",
+    "badgeUrl": "/images/certifications/aws-logo.png",
+    "credentialUrl": "https://www.credly.com/badges/example-docker-id",
+    "skills": [
+      "Docker",
+      "Containerization",
+      "DevOps"
+    ]
+  },
+  {
+    "id": 9,
+    "title": "Certified Scrum Master (CSM)",
+    "issuer": "Scrum Alliance",
+    "issueDate": "2024-10-10",
+    "expiryDate": "2026-10-10",
+    "badgeUrl": "/images/certifications/aws-logo.png",
+    "credentialUrl": "https://www.scrumalliance.org/certification/example-csm-id",
+    "skills": [
+      "Agile",
+      "Scrum",
+      "Project Management"
+    ]
   }
 ]

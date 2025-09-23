@@ -2,8 +2,13 @@
 
 import React, { useState, useEffect } from 'react';
 import { FaGithub, FaCode } from 'react-icons/fa';
-import GitHubCalendar from 'react-github-calendar';
-import axios from 'axios';
+// Import dynamically to avoid build issues
+import dynamic from 'next/dynamic';
+
+// Dynamic imports
+const GitHubCalendar = dynamic(() => import('react-github-calendar'), { ssr: false });
+
+// We'll use fetch instead of axios for API calls
 
 interface ContributionDay {
   date: string;
@@ -77,8 +82,14 @@ const CodeContributions: React.FC<ContributionProps> = ({
   // Function to fetch LeetCode stats using our API
   async function getLeetCodeStats(username: string) {
     try {
-      const res = await axios.post('/api/leetcode', { username });
-      return res.data;
+      const res = await fetch('/api/leetcode', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username }),
+      });
+      return await res.json();
     } catch (err) {
       console.error('Error fetching LeetCode stats:', err);
       throw err;

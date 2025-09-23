@@ -6,7 +6,7 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import certificationsData from '../data/certifications.json';
 import { FiExternalLink, FiAward, FiCalendar, FiChevronLeft, FiChevronRight } from 'react-icons/fi';
-import { Tilt } from 'react-tilt';
+import Tilt from 'react-parallax-tilt';
 import './CertificationsShowcase.css';
 
 // Ensure GSAP plugins are registered
@@ -362,14 +362,13 @@ const CertificationsShowcase: React.FC = () => {
             <AnimatePresence mode="wait" initial={false}>
               <Tilt
                 key={certificationsData[selectedCertIndex].id}
-                options={{
-                  max: 5,
-                  scale: 1.02,
-                  speed: 300,
-                  transition: true,
-                  easing: "cubic-bezier(.03,.98,.52,.99)",
-                  transitionSpeed: 400 // Smooth tilt transition
-                }}
+                tiltMaxAngleX={5}
+                tiltMaxAngleY={5}
+                scale={1.02}
+                transitionSpeed={300}
+                tiltEnable={true}
+                glareEnable={false}
+                transitionEasing="cubic-bezier(.03,.98,.52,.99)"
                 style={{ transformStyle: "preserve-3d" }}
                 className="w-full h-full"
               >

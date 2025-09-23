@@ -1,49 +1,153 @@
 "use client";
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaGithub, FaCode } from 'react-icons/fa';
+import GitHubCalendar from 'react-github-calendar';
+import axios from 'axios';
 
 interface ContributionDay {
   date: string;
   count: number;
 }
 
+interface LeetCodeSubmissionCalendar {
+  [timestamp: string]: number;
+}
+
+interface LeetCodeStats {
+  totalSolved: number;
+  easySolved: number;
+  mediumSolved: number;
+  hardSolved: number;
+  ranking?: number;
+  contestRating?: number;
+  submissionCalendar?: LeetCodeSubmissionCalendar;
+  submissionCalendarArray?: Array<{ date: string, count: number }>;
+}
+
 interface ContributionProps {
   githubUsername?: string;
   leetcodeUsername?: string;
   githubContributions?: ContributionDay[];
-  leetcodeStats?: {
-    totalSolved: number;
-    easySolved: number;
-    mediumSolved: number;
-    hardSolved: number;
-    ranking?: number;
-    contestRating?: number;
-  };
+  leetcodeStats?: LeetCodeStats;
 }
 
 const CodeContributions: React.FC<ContributionProps> = ({
   githubUsername = "dharun36",
   leetcodeUsername = "dharun36",
-  // Sample data - in a real app, you'd fetch this from APIs
-  githubContributions = [
-    { date: "2025-09-16", count: 500 },
-    { date: "2025-09-15", count: 300 },
-    { date: "2025-09-14", count: 700 },
-    { date: "2025-09-13", count: 200 },
-    { date: "2025-09-12", count: 400 },
-    { date: "2025-09-11", count: 100 },
-    { date: "2025-09-10", count: 6 },
-  ],
-  leetcodeStats = {
-    totalSolved: 354,
-    easySolved: 125,
-    mediumSolved: 189,
-    hardSolved: 40,
-    ranking: 12437,
-    contestRating: 1842,
-  },
+  githubContributions = [],
 }) => {
+  // Custom CSS for the LeetCode calendar
+  const calendarStyles = `
+    .calendar-container {
+      padding: 12px;
+      border-radius: 6px;
+      background: rgba(30, 30, 30, 0.3);
+      max-width: 100%;
+      overflow-x: auto;
+      margin-bottom: 12px;
+    }
+    .leetcode-calendar {
+      min-width: fit-content;
+      padding: 4px;
+    }
+    .leetcode-calendar .day-cell {
+      width: 12px;
+      height: 12px;
+      border-radius: 2px;
+      transition: transform 0.15s ease-in-out;
+    }
+    .leetcode-calendar .day-cell:hover {
+      transform: scale(1.35);
+      z-index: 10;
+    }
+    @media (min-width: 640px) {
+      .calendar-container {
+        padding: 16px;
+      }
+      .leetcode-calendar .day-cell {
+        width: 13px;
+        height: 13px;
+      }
+    }
+  `;
+  const [leetcodeStats, setLeetcodeStats] = useState<LeetCodeStats>({
+    totalSolved: 0,
+    easySolved: 0,
+    mediumSolved: 0,
+    hardSolved: 0,
+  });
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  // Function to fetch LeetCode stats
+  async function getLeetCodeStats(username: string) {
+    try {
+      const res = await axios.post('https://leetcode-restful-api.vercel.app/profile', { username });
+      return res.data;
+    } catch (err) {
+      console.error('Error fetching LeetCode stats:', err);
+      throw err;
+    }
+  }
+
+  useEffect(() => {
+    const fetchLeetCodeData = async () => {
+      try {
+        setLoading(true);
+        const data = await getLeetCodeStats(leetcodeUsername);
+
+        // Transform the submission calendar data from API
+        let calendarArray: Array<{ date: string, count: number }> = [];
+        if (data.submissionCalendar) {
+          try {
+            calendarArray = Object.entries(data.submissionCalendar)
+              .filter(([timestamp, count]) => {
+                // Validate that timestamp is a valid number and count is a number
+                const isValid = !isNaN(parseInt(timestamp)) && typeof count === 'number';
+                return isValid;
+              })
+              .map(([timestamp, count]) => ({
+                date: new Date(parseInt(timestamp) * 1000).toISOString().split('T')[0],
+                count: count as number
+              }));
+          } catch (err) {
+            console.error('Error processing LeetCode submission calendar', err);
+            // Provide empty array if there's an error
+            calendarArray = [];
+          }
+        }
+
+        setLeetcodeStats({
+          totalSolved: data.totalSolved || 0,
+          easySolved: data.easySolved || 0,
+          mediumSolved: data.mediumSolved || 0,
+          hardSolved: data.hardSolved || 0,
+          ranking: data.ranking,
+          contestRating: data.contestRating,
+          submissionCalendar: data.submissionCalendar,
+          submissionCalendarArray: calendarArray
+        });
+      } catch (err) {
+        console.error('Failed to fetch LeetCode data', err);
+        setError('Failed to load LeetCode stats');
+        // Fallback to default data if API fails
+        setLeetcodeStats({
+          totalSolved: 354,
+          easySolved: 125,
+          mediumSolved: 189,
+          hardSolved: 40,
+          ranking: 12437,
+          contestRating: 1842,
+        });
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchLeetCodeData();
+  }, [leetcodeUsername]);
+
   // Helper function to determine color intensity based on contribution count
   const getContributionColor = (count: number) => {
     if (count === 0) return "bg-gray-100 dark:bg-gray-800";
@@ -53,8 +157,32 @@ const CodeContributions: React.FC<ContributionProps> = ({
     return "bg-blue-500 dark:bg-blue-500";
   };
 
+  // Helper function to determine color for LeetCode submissions
+  const getSubmissionColor = (count: number, isToday: boolean = false) => {
+    if (isToday) {
+      // Special border for today's cell
+      return count === 0
+        ? "bg-gray-800/30 ring-1 ring-white/30"
+        : `${getSubmissionBaseColor(count)} ring-1 ring-white/50`;
+    }
+    return getSubmissionBaseColor(count);
+  };
+
+  // Base color function for submissions
+  const getSubmissionBaseColor = (count: number) => {
+    if (count === 0) return "bg-gray-800/30";
+    if (count === 1) return "bg-[#f7cf7c]/40";
+    if (count === 2) return "bg-[#f7cf7c]/60";
+    if (count === 3) return "bg-[#f7cf7c]/80";
+    if (count === 4) return "bg-[#f7cf7c]";
+    if (count <= 6) return "bg-[#f89f1b]/80";
+    if (count <= 9) return "bg-[#f89f1b]/90";
+    return "bg-[#f89f1b]";
+  };
+
   return (
     <div className="w-full min-h-screen py-12 sm:py-16 md:py-24 flex flex-col" style={{ maxWidth: "100vw", overflowX: "hidden" }}>
+      <style jsx>{calendarStyles}</style>
       <h2 className="text-3xl sm:text-4xl md:text-5xl text-black dark:text-white p-2 sm:p-3 font-bold mb-2 sm:mb-4 text-center mx-auto">
         Code Contributions
       </h2>
@@ -65,85 +193,35 @@ const CodeContributions: React.FC<ContributionProps> = ({
       <div className="w-full max-w-lg sm:max-w-2xl md:max-w-3xl lg:max-w-4xl mx-auto px-3 sm:px-6 md:px-12">
         <div className="flex flex-col gap-10">
           {/* GitHub Contribution Section - Full Width */}
-          <div className="rounded-lg sm:rounded-xl md:rounded-2xl overflow-hidden bg-gradient-to-br from-white via-[#f8f8f8] to-[#f0f0f0] dark:from-[#111827] dark:via-[#0c1222] dark:to-[#090f1a] p-3 sm:p-4 md:p-6">
+          <div className="rounded-lg sm:rounded-xl md:rounded-2xl overflow-hidden bg-transparent from-gray-900 via-[#0d1117] to-[#0d1117] p-3 sm:p-4 md:p-6 shadow-lg">
             <div className="flex items-center mb-3 sm:mb-6">
-              <FaGithub className="text-xl sm:text-2xl md:text-3xl mr-2 sm:mr-3 text-gray-800 dark:text-gray-200" />
-              <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-800 dark:text-white">GitHub Contributions</h3>
+              <FaGithub className="text-xl sm:text-2xl md:text-3xl mr-2 sm:mr-3 text-gray-200" />
+              <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white">GitHub Contributions</h3>
             </div>
-
-            <div className="mb-4">
-              <a
-                href={`https://github.com/${githubUsername}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-600 dark:text-blue-400 hover:underline font-medium flex items-center"
-              >
-                @{githubUsername}
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
-                </svg>
-              </a>
-            </div>
-
-            {/* Enhanced contribution graph visualization */}
+            {/* GitHub Contributions Calendar */}
             <div className="mb-4 sm:mb-6">
-              <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mb-1 sm:mb-2">Recent activity:</p>
-              <div className="grid grid-cols-7 sm:grid-cols-14 md:grid-cols-21 lg:grid-cols-28 xl:grid-cols-35 gap-0.5 sm:gap-1 py-1 sm:py-2">
-                {React.useMemo(() => {
-                  // Generate a deterministic pattern based on fixed indices
-                  const contributions = Array.from({ length: 35 }).map((_, idx) => {
-                    // Create a deterministic pattern - no randomness
-                    let count = 0;
-                    if (idx % 7 === 0) count = 4;
-                    else if (idx % 11 === 0) count = 6;
-                    else if (idx % 3 === 0) count = 2;
-                    else if (idx % 5 === 0) count = 3;
-                    else if (idx % 2 === 0 && idx % 3 === 1) count = 1;
-
-                    const date = new Date();
-                    date.setDate(date.getDate() - (35 - idx));
-                    const dateStr = date.toISOString().split('T')[0];
-
-                    return {
-                      key: idx,
-                      count,
-                      dateStr
-                    };
-                  });
-
-                  return contributions.map(item => (
-                    <div
-                      key={item.key}
-                      className={`w-2.5 h-2.5 sm:w-3 sm:h-3 md:w-4 md:h-4 rounded-sm ${getContributionColor(item.count)}`}
-                      title={`${item.dateStr}: ${item.count} contributions`}
-                    />
-                  ));
-                }, [])}
-              </div>
-            </div>
-
-            <div className="bg-gray-50 dark:bg-gray-800/50 p-3 sm:p-4 rounded-md sm:rounded-lg">
-              <p className="text-center text-xs sm:text-sm md:text-base text-gray-800 dark:text-gray-200">
-                View my complete contribution history and projects on GitHub
-              </p>
-              <div className="mt-3 sm:mt-4 flex justify-center">
-                <a
-                  href={`https://github.com/${githubUsername}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-3 sm:px-4 py-1.5 sm:py-2 bg-gray-800 hover:bg-gray-700 text-white text-xs sm:text-sm dark:bg-gray-700 dark:hover:bg-gray-600 rounded-md sm:rounded-lg transition-colors flex items-center"
-                >
-                  <FaGithub className="mr-1.5 sm:mr-2" /> Visit GitHub Profile
-                </a>
+              <div className="overflow-x-auto py-4">
+                <GitHubCalendar
+                  username={githubUsername}
+                  colorScheme="dark"
+                  blockSize={12}
+                  blockMargin={4}
+                  fontSize={12}
+                  hideColorLegend={false}
+                  hideMonthLabels={false}
+                  labels={{
+                    totalCount: '{{count}} contributions in the last year'
+                  }}
+                />
               </div>
             </div>
           </div>
 
           {/* LeetCode Stats Section */}
-          <div className="rounded-lg sm:rounded-xl md:rounded-2xl overflow-hidden bg-gradient-to-br from-white via-[#f8f8f8] to-[#f0f0f0] dark:from-[#111827] dark:via-[#0c1222] dark:to-[#090f1a] p-3 sm:p-4 md:p-6 shadow-lg">
+          <div className="rounded-lg sm:rounded-xl md:rounded-2xl overflow-hidden bg-gradient-to-br from-gray-900 via-[#0d1117] to-[#0d1117] p-3 sm:p-4 md:p-6 shadow-lg">
             <div className="flex items-center mb-3 sm:mb-6">
-              <FaCode className="text-xl sm:text-2xl md:text-3xl mr-2 sm:mr-3 text-gray-800 dark:text-gray-200" />
-              <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-800 dark:text-white">LeetCode Stats</h3>
+              <FaCode className="text-xl sm:text-2xl md:text-3xl mr-2 sm:mr-3 text-gray-200" />
+              <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white">LeetCode Stats</h3>
             </div>
 
             <div className="mb-4">
@@ -151,13 +229,142 @@ const CodeContributions: React.FC<ContributionProps> = ({
                 href={`https://leetcode.com/${leetcodeUsername}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-blue-600 dark:text-blue-400 hover:underline font-medium flex items-center"
+                className="text-[#f89f1b] hover:underline font-medium flex items-center"
               >
                 @{leetcodeUsername}
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" viewBox="0 0 20 20" fill="currentColor">
                   <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
                 </svg>
               </a>
+            </div>
+
+            {/* LeetCode Contributions Calendar */}
+            <div className="mb-4 sm:mb-6">
+              <div className="flex justify-between items-center mb-1 sm:mb-2">
+                <p className="text-xs sm:text-sm text-gray-400">LeetCode Submission Activity:</p>
+                <p className="text-[10px] sm:text-xs text-gray-500">Last 15 weeks</p>
+              </div>
+              <div className="overflow-x-auto py-4">
+                {loading ? (
+                  <div className="flex flex-col justify-center items-center h-32 gap-2">
+                    <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-b-2 border-[#f89f1b]"></div>
+                    <p className="text-sm text-[#f89f1b]">Loading LeetCode data...</p>
+                  </div>
+                ) : error ? (
+                  <div className="flex flex-col justify-center items-center h-24 gap-2">
+                    <p className="text-red-400 text-sm">{error}</p>
+                    <p className="text-gray-400 text-xs">Using fallback data instead</p>
+                  </div>
+                ) : leetcodeStats.submissionCalendarArray && leetcodeStats.submissionCalendarArray.length > 0 ? (
+                  <div className="calendar-container">
+                    <div className="leetcode-calendar">
+                      {/* Month Labels */}
+                      <div className="flex text-xs text-gray-400 mb-2">
+                        {(() => {
+                          const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+                          const today = new Date();
+                          const monthsToShow = 5;
+                          const elements: React.ReactNode[] = [];
+
+                          for (let i = monthsToShow; i >= 0; i--) {
+                            const date = new Date();
+                            date.setMonth(today.getMonth() - i);
+                            const month = months[date.getMonth()];
+
+                            // Position month label approximately where it should appear
+                            const position = (monthsToShow - i) * (100 / monthsToShow);
+                            elements.push(
+                              <div
+                                key={month}
+                                className="absolute text-xs"
+                                style={{ left: `${position}%` }}
+                              >
+                                {month}
+                              </div>
+                            );
+                          }
+
+                          return <div className="relative h-4 w-full">{elements}</div>;
+                        })()}
+                      </div>
+
+                      {/* Days of Week Labels */}
+                      <div className="flex text-xs text-gray-400 mb-1">
+                        {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day, idx) => (
+                          <div key={day} className="w-3 mx-1 text-center">
+                            {idx % 2 === 0 ? day[0] : ''}
+                          </div>
+                        ))}
+                      </div>
+
+                      {/* Calendar Grid */}
+                      <div className="grid grid-flow-col gap-1">
+                        {Array.from({ length: 7 }, (_, dayOfWeek) => (
+                          <div key={dayOfWeek} className="grid grid-flow-row gap-1">
+                            {(() => {
+                              // Get last 365 days of data (or all available)
+                              const data = leetcodeStats.submissionCalendarArray || [];
+                              const cells: React.ReactNode[] = [];
+
+                              // Filter for submissions matching this day of week
+                              const daysForThisColumn = data
+                                .filter(day => {
+                                  const date = new Date(day.date);
+                                  return date.getDay() === dayOfWeek;
+                                })
+                                .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+
+                              // Create cells for this column (day of week)
+                              daysForThisColumn.slice(-15).forEach(day => {
+                                // Format date for display
+                                const date = new Date(day.date);
+                                const formattedDate = date.toLocaleDateString('en-US', {
+                                  month: 'short',
+                                  day: 'numeric',
+                                  year: 'numeric'
+                                });
+
+                                // Check if this is today's cell
+                                const today = new Date();
+                                const isToday = date.toDateString() === today.toDateString();
+
+                                cells.push(
+                                  <div
+                                    key={day.date}
+                                    className={`day-cell ${getSubmissionColor(day.count, isToday)}`}
+                                    title={`${formattedDate}: ${day.count} ${day.count === 1 ? 'submission' : 'submissions'}`}
+                                  />
+                                );
+                              });
+
+                              return cells;
+                            })()}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="flex justify-between mt-4 text-xs text-gray-400 items-center">
+                      <span>Less</span>
+                      <div className="flex gap-1">
+                        {[0, 1, 2, 4, 6, 10].map(count => (
+                          <div
+                            key={count}
+                            className={`w-3 h-3 rounded-sm ${getSubmissionColor(count)}`}
+                            title={`${count} ${count === 1 ? 'submission' : 'submissions'}`}
+                          />
+                        ))}
+                      </div>
+                      <span>More</span>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="flex flex-col justify-center items-center h-24 gap-1">
+                    <p className="text-gray-400 text-sm">No submission data available</p>
+                    <p className="text-gray-500 text-xs">Try refreshing or check your username</p>
+                  </div>
+                )}
+              </div>
             </div>
 
             {/* Problem solving stats */}

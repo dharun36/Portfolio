@@ -1,0 +1,22 @@
+.navbar {
+  transition: transform 300ms ease-in-out;
+  will-change: transform;
+}
+
+.navbar-visible {
+  transform: translateY(0);
+}
+
+.navbar-hidden {
+  transform: translateY(-110%);
+}
+
+/* Extra styles for smooth transitions */
+.navbar-content {
+  backdrop-filter: blur(10px);
+}
+
+/* Add shadow only when scrolled down */
+.navbar[data-at-top="false"] .navbar-content {
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.1);
+}

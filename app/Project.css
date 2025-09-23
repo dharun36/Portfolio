@@ -1,0 +1,29 @@
+/* Project.css */
+.scroller {
+  scroll-behavior: auto !important;
+  /* Force standard scrolling */
+  -webkit-overflow-scrolling: touch;
+  /* For iOS */
+}
+
+/* Disable scroll animation on all ScrollStack elements */
+.scroll-stack-card {
+  transition: none !important;
+  transform: translate3d(0, 0, 0);
+  /* Force hardware acceleration */
+  will-change: transform;
+  /* Hint to browser for optimization */
+  backface-visibility: hidden;
+}
+
+/* Prevent text ghosting during scroll */
+.scroll-stack-card * {
+  backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Optimize performance by disabling animations during scroll */
+.scroller:active .scroll-stack-card {
+  transition: none !important;
+}

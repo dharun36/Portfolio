@@ -55,7 +55,7 @@ export default function About() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2, duration: 0.6 }}
               >
-                <div className="bg-white dark:bg-gray-900 rounded-lg sm:rounded-xl p-3 sm:p-5 md:p-8 border border-gray-200 dark:border-gray-800 shadow-md w-full">
+                <div className="bg-white dark:bg-gray-950 rounded-lg sm:rounded-xl p-3 sm:p-5 md:p-8 border border-gray-200 dark:border-gray-800 shadow-md w-full">
                   <div className="flex items-center gap-2 mb-3 sm:mb-5 pb-2 border-b border-gray-200 dark:border-gray-800">
                     <FiUser className="text-lg sm:text-xl md:text-2xl text-gray-700 dark:text-gray-300" />
                     <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-800 dark:text-white">

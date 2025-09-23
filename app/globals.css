@@ -151,17 +151,19 @@ body {
 }
 
 .animate-marquee-left {
-  animation: marquee-left 20s linear infinite;
+  animation: marquee-left 30s linear infinite;
 }
 
 .animate-marquee-right {
-  animation: marquee-right 20s linear infinite;
+  animation: marquee-right 30s linear infinite;
 }
 
 .marquee-container {
   overflow: hidden;
   white-space: nowrap;
   width: 100%;
+  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
 }
 
 .marquee-row:hover .animate-marquee-left,

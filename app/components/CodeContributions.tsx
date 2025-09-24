@@ -138,12 +138,14 @@ const CodeContributions: React.FC<ContributionProps> = ({
   return (
     <div className="w-full min-h-screen py-12 sm:py-16 md:py-24 flex flex-col" style={{ maxWidth: "100vw", overflowX: "hidden" }}>
       <style jsx>{calendarStyles}</style>
-      <h2 className="text-3xl sm:text-4xl md:text-5xl text-black dark:text-white p-2 sm:p-3 font-bold mb-2 sm:mb-4 text-center mx-auto">
-        Code Contributions
-      </h2>
-      <p className="text-center text-sm sm:text-base md:text-lg mb-6 sm:mb-10 max-w-xl sm:max-w-2xl md:max-w-3xl mx-auto px-4 text-gray-700 dark:text-gray-300">
-        My activity on GitHub and LeetCode
-      </p>
+      <div className="text-center mb-3 sm:mb-6">
+        <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">
+          Code Contributions
+        </h2>
+        <p className="text-center text-sm sm:text-base mt-4 mb-4 max-w-2xl mx-auto text-gray-700 dark:text-gray-300">
+          My activity on GitHub and LeetCode
+        </p>
+      </div>
 
       <div className="w-full max-w-lg sm:max-w-2xl md:max-w-4xl lg:max-w-5xl mx-auto px-3 sm:px-6 md:px-12">
         <div className="flex flex-col gap-10">

@@ -16,18 +16,25 @@ export default function About() {
         viewOptions={{ margin: '0px 0px -200px 0px' }}
         transition={{ duration: 0.4, ease: 'easeInOut' }}
       >
-        <section id="about" className=" sm:py-4 md:py-18 mt-12 sm:mt-16 sm:mb-14 relative w-full mx-auto" style={{ maxWidth: "calc(100vw - 16px)", width: "100%" }}>
+        <section id="about" className="py-12 sm:py-16 md:py-24 mt-12 sm:mt-16 sm:mb-14 relative w-full mx-auto" style={{ maxWidth: "calc(100vw - 16px)", width: "100%" }}>
           <div className="w-full max-w-lg sm:max-w-2xl md:max-w-3xl lg:max-w-4xl mx-auto px-2 sm:px-4 md:px-6">
-            {/* Optimized section heading */}
-            <div className="text-center mb-3 sm:mb-6">
+            {/* Simple section heading */}
+            <div className="text-center mb-12 sm:mb-16">
               <motion.h2
-                className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white"
+                className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white"
                 initial={{ opacity: 0, y: -10 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
               >
                 About Me
               </motion.h2>
+
+              <motion.div
+                className="w-20 sm:w-24 h-1 bg-gray-800 dark:bg-gray-200 mx-auto mt-4"
+                initial={{ width: 0 }}
+                whileInView={{ width: 80 }}
+                transition={{ delay: 0.3, duration: 0.8 }}
+              ></motion.div>
             </div>
 
             {/* Main content */}

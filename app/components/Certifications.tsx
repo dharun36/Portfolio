@@ -74,15 +74,6 @@ const CertificationCard: React.FC<{ certification: Certification; index: number 
             </span>
           ))}
         </div>
-
-        <a
-          href={certification.credentialUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center text-sm mt-auto pt-4 text-blue-600 dark:text-blue-400 hover:underline"
-        >
-          Verify Credential <FiExternalLink className="ml-1" />
-        </a>
       </div>
     </motion.div>
   );

@@ -106,7 +106,7 @@ const CertificateDetails: React.FC<{ certification: Certification }> = ({ certif
     >
       {/* Background gradient with animation */}
       <motion.div
-        className="h-16"
+        className="h-12 sm:h-16"
         initial={{ opacity: 0.7 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
@@ -115,10 +115,10 @@ const CertificateDetails: React.FC<{ certification: Certification }> = ({ certif
         }}
       ></motion.div>
 
-      <div className="p-5 relative">
+      <div className="p-3 sm:p-5 relative">
         {/* Badge image overlapping the gradient with smooth animation */}
         <motion.div
-          className="absolute -top-10 left-5 bg-white dark:bg-gray-800 p-2 rounded-lg shadow-lg badge-shine"
+          className="absolute -top-8 sm:-top-10 left-3 sm:left-5 bg-white dark:bg-gray-800 p-1.5 sm:p-2 rounded-lg shadow-lg badge-shine"
           initial={{ y: 10, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{
@@ -130,45 +130,47 @@ const CertificateDetails: React.FC<{ certification: Certification }> = ({ certif
           <motion.img
             src={certification.badgeUrl}
             alt={certification.title}
-            className="w-16 h-16 object-contain"
+            className="w-12 h-12 sm:w-16 sm:h-16 object-contain"
             initial={{ scale: 0.9, rotate: -5 }}
             animate={{ scale: 1, rotate: 0 }}
             transition={{ delay: 0.2, duration: 0.5, ease: "easeOut" }}
           />
-        </motion.div>        {/* Title and details with proper spacing for the badge */}
-        <div className="mt-8">
-          <h2 className="text-xl font-bold text-gray-900 dark:text-white">{certification.title}</h2>
-          <p className="text-sm text-blue-600 dark:text-blue-400 mb-3">{certification.issuer}</p>
+        </motion.div>
 
-          <div className="grid grid-cols-2 gap-4 mb-4">
+        {/* Title and details with proper spacing for the badge */}
+        <div className="mt-6 sm:mt-8">
+          <h2 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white line-clamp-2">{certification.title}</h2>
+          <p className="text-xs sm:text-sm text-blue-600 dark:text-blue-400 mb-2 sm:mb-3">{certification.issuer}</p>
+
+          <div className="grid grid-cols-2 gap-2 sm:gap-4 mb-3 sm:mb-4">
             <div className="flex items-center">
-              <div className="bg-blue-100 dark:bg-blue-900/30 p-2 rounded-full mr-3">
-                <FiCalendar className="text-blue-600 dark:text-blue-400" size={16} />
+              <div className="bg-blue-100 dark:bg-blue-900/30 p-1.5 sm:p-2 rounded-full mr-2 sm:mr-3">
+                <FiCalendar className="text-blue-600 dark:text-blue-400" size={14} />
               </div>
               <div>
                 <p className="text-xs text-gray-500 dark:text-gray-400">Issued</p>
-                <p className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                <p className="text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300">
                   {formatDate(certification.issueDate)}
                 </p>
               </div>
             </div>
 
             <div className="flex items-center">
-              <div className="bg-purple-100 dark:bg-purple-900/30 p-2 rounded-full mr-3">
-                <FiAward className="text-purple-600 dark:text-purple-400" size={16} />
+              <div className="bg-purple-100 dark:bg-purple-900/30 p-1.5 sm:p-2 rounded-full mr-2 sm:mr-3">
+                <FiAward className="text-purple-600 dark:text-purple-400" size={14} />
               </div>
               <div>
                 <p className="text-xs text-gray-500 dark:text-gray-400">Credential ID</p>
-                <p className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                <p className="text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300">
                   {certification.id}
                 </p>
               </div>
             </div>
           </div>
 
-          <div className="mb-4">
-            <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Skills & Expertise</h3>
-            <div className="flex flex-wrap gap-1.5">
+          <div className="mb-3 sm:mb-4">
+            <h3 className="text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 sm:mb-2">Skills & Expertise</h3>
+            <div className="flex flex-wrap gap-1 sm:gap-1.5">
               {certification.skills.map((skill, idx) => (
                 <motion.span
                   key={idx}
@@ -179,24 +181,13 @@ const CertificateDetails: React.FC<{ certification: Certification }> = ({ certif
                     duration: 0.3,
                     ease: [0.19, 1.0, 0.22, 1.0]
                   }}
-                  className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-md text-xs font-medium"
+                  className="px-1.5 sm:px-2 py-0.5 sm:py-1 bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-md text-xs font-medium"
                 >
                   {skill}
                 </motion.span>
               ))}
             </div>
           </div>
-
-          <motion.a
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            href={certification.credentialUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white rounded-md text-sm font-medium shadow-md hover:shadow-lg transition-all duration-300"
-          >
-            <FiExternalLink className="mr-2" size={14} /> Verify Credential
-          </motion.a>
         </div>
       </div>
     </motion.div>
@@ -291,14 +282,9 @@ const CertificationsShowcase: React.FC = () => {
           >
             <h2
               ref={headingRef}
-              className="text-3xl font-bold text-gray-900 dark:text-white inline-block relative"
+              className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white"
             >
               Professional Certifications
-              <motion.span
-                className="absolute -bottom-2 left-0 w-0 h-1 bg-gradient-to-r from-blue-600 to-purple-600"
-                animate={{ width: "100%" }}
-                transition={{ duration: 1, delay: 0.5 }}
-              />
             </h2>
             <p className="mt-3 text-sm text-gray-700 dark:text-gray-300 max-w-2xl mx-auto">
               Industry recognized certifications validating my expertise
@@ -306,14 +292,66 @@ const CertificationsShowcase: React.FC = () => {
           </motion.div>
         </div>
 
-        {/* Main showcase - more compact layout */}
+        {/* Mobile selector - Horizontal scrollable thumbnails */}
+        <div className="lg:hidden mb-6">
+          <div className="flex justify-between items-center mb-3">
+            <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400">Select certificate:</h3>
+            <div className="flex space-x-2">
+              <motion.button
+                onClick={handlePrevious}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="p-1.5 rounded-md bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 flex items-center"
+                aria-label="Previous certificate"
+              >
+                <FiChevronLeft size={16} />
+              </motion.button>
+              <motion.button
+                onClick={handleNext}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="p-1.5 rounded-md bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 flex items-center"
+                aria-label="Next certificate"
+              >
+                <FiChevronRight size={16} />
+              </motion.button>
+            </div>
+          </div>
+
+          {/* Thumbnail indicators */}
+          <div className="flex justify-center space-x-1 mb-4">
+            {certificationsData.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setSelectedCertIndex(index)}
+                className={`w-2 h-2 rounded-full transition-all duration-300 ${index === selectedCertIndex
+                  ? 'bg-blue-500 w-4'
+                  : 'bg-gray-300 dark:bg-gray-600'
+                  }`}
+                aria-label={`Select certificate ${index + 1}`}
+              />
+            ))}
+          </div>
+
+          {/* Current certification display */}
+          <div className="px-2">
+            <AnimatePresence mode="wait" initial={false}>
+              <CertificateDetails
+                key={certificationsData[selectedCertIndex].id}
+                certification={certificationsData[selectedCertIndex]}
+              />
+            </AnimatePresence>
+          </div>
+        </div>
+
+        {/* Desktop layout - Grid with list and details */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="grid grid-cols-1 lg:grid-cols-4 gap-6"
+          className="hidden lg:grid lg:grid-cols-4 lg:gap-6"
         >
-          {/* Certificate list */}
+          {/* Certificate list - Desktop only */}
           <div className="col-span-1">
             <div className="relative">
               <div className="flex flex-col gap-2 mb-2 max-h-[420px] overflow-y-auto pr-1 scrollbar-thin">
@@ -357,8 +395,8 @@ const CertificationsShowcase: React.FC = () => {
             </div>
           </div>
 
-          {/* Certificate details */}
-          <div className="col-span-1 lg:col-span-3 h-full relative">
+          {/* Certificate details - Desktop */}
+          <div className="col-span-3 h-full relative">
             <AnimatePresence mode="wait" initial={false}>
               <Tilt
                 key={certificationsData[selectedCertIndex].id}

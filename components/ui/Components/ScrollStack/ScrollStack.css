@@ -1,0 +1,47 @@
+/* Base styles for the scroll stack container */
+.scroll-stack-container {
+  position: relative;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* Individual items in the scroll stack */
+.scroll-stack-item {
+  position: relative;
+  margin: 32px auto;
+  padding: 0;
+  transform-origin: center;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Scroll stack card styling */
+.scroll-stack-card {
+  display: block;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  width: 92%;
+  max-width: 1200px;
+}
+
+/* Active item styles */
+.scroll-stack-item-active {
+  z-index: 10;
+}
+
+/* End marker styles */
+.scroll-stack-end {
+  height: 80vh;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  .scroll-stack-card {
+    width: 95%;
+  }
+}

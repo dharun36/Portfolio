@@ -1,51 +1,50 @@
 [
   {
     "id": 1,
-    "title": "Smart Home Dashboard",
-    "description": "A comprehensive IoT dashboard for smart home control using React. Features real-time data visualization, device control panels, and customizable user interfaces.",
-    "tech": "React, Redux, TypeScript, Chart.js",
+    "title": "Geolocation-Based Attendance Tracker",
+    "description": "A smart attendance tracking system that uses geolocation to mark attendance automatically. Features real-time tracking, secure authentication, and detailed attendance reports for organizations and educational institutions.",
+    "tech": "React, Node.js, MongoDB, Google Maps API",
     "features": [
-      "Real-time device monitoring",
-      "Responsive design for all devices",
-      "Energy usage analytics",
-      "Custom automation setup"
+      "Location-based attendance marking",
+      "Real-time attendance dashboard",
+      "Automated reports and notifications",
+      "Secure user authentication"
     ],
-    "image": "https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?q=80&w=2560&auto=format&fit=crop",
-    "githubUrl": "https://github.com/username/smart-home",
-    "liveUrl": "https://smart-home-demo.vercel.app",
+    "image": "https://images.unsplash.com/photo-1596495577886-d920f5c6ec8b?q=80&w=2560&auto=format&fit=crop",
+    "githubUrl": "https://github.com/username/geolocation-attendance",
+    "liveUrl": "https://geolocation-attendance.vercel.app",
     "category": "Web App"
   },
   {
     "id": 2,
-    "title": "AI Image Generator",
-    "description": "An advanced image generation application using stable diffusion models to create high-quality images from text descriptions. Integrates multiple AI models for diverse artistic styles.",
-    "tech": "Next.js, Tailwind CSS, Stable Diffusion API, Python",
+    "title": "Credit Card Approval Prediction",
+    "description": "An AI-powered application that predicts credit card approval using machine learning models. Integrates historical data analysis and predictive modeling to provide accurate and actionable insights for financial institutions.",
+    "tech": "Python, Scikit-learn, Pandas, Flask",
     "features": [
-      "Text-to-image generation",
-      "Style transfer capabilities",
-      "Batch processing",
-      "Custom model fine-tuning"
+      "Predicts approval/rejection of applications",
+      "Interactive input and output interface",
+      "Visualization of feature impact",
+      "Model evaluation and performance metrics"
     ],
-    "image": "https://images.unsplash.com/photo-1524673278499-6c3b145e97c3?q=80&w=2506&auto=format&fit=crop",
-    "githubUrl": "https://github.com/username/ai-image-generator",
-    "liveUrl": "https://ai-image-generator.vercel.app",
+    "image": "https://images.unsplash.com/photo-1573164574391-9a57f5a0df74?q=80&w=2560&auto=format&fit=crop",
+    "githubUrl": "https://github.com/username/credit-card-prediction",
+    "liveUrl": "https://credit-card-prediction.vercel.app",
     "category": "AI Application"
   },
   {
     "id": 3,
-    "title": "Crypto Portfolio Tracker",
-    "description": "A real-time cryptocurrency portfolio tracker with advanced analytics. Track investments, analyze performance, and get market insights with customizable alerts and reports.",
-    "tech": "Python, Flask, MongoDB, WebSockets",
+    "title": "Farmer Assistant",
+    "description": "A digital assistant for farmers that provides actionable insights for crop management. Combines soil health analysis, pest alerts, and weather updates to improve productivity and decision-making in agriculture.",
+    "tech": "React, Node.js, MongoDB, IoT integration",
     "features": [
-      "Real-time price updates",
-      "Portfolio analytics",
-      "Trading history visualization",
-      "Price alert system"
+      "Soil health monitoring",
+      "Pest alert notifications",
+      "Crop management recommendations",
+      "Offline-first and mobile-friendly interface"
     ],
-    "image": "https://images.unsplash.com/photo-1621501103258-d0357c36356f?q=80&w=2574&auto=format&fit=crop",
-    "githubUrl": "https://github.com/username/crypto-tracker",
-    "liveUrl": "https://crypto-portfolio-tracker.herokuapp.com",
-    "category": "Finance Tool"
-  
+    "image": "https://images.unsplash.com/photo-1501004318641-b39e6451bec6?q=80&w=2560&auto=format&fit=crop",
+    "githubUrl": "https://github.com/username/farmer-assistant",
+    "liveUrl": "https://farmer-assistant.vercel.app",
+    "category": "Agriculture Tool"
   }
 ]

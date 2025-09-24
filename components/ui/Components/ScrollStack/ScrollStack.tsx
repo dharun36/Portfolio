@@ -17,10 +17,11 @@ export const ScrollStackItem: React.FC<ScrollStackItemProps> = ({
   style,
 }) => (
   <div
-    className={`scroll-stack-card relative h-96 sm:mx-4 md:mx-8 lg:mx-32 my-8 rounded-[40px] shadow-[0_0_30px_rgba(0,0,0,0.1)] dark:shadow-[0_0_30px_rgba(160,160,160,0.1)] box-border origin-top ${itemClassName}`.trim()}
+    className={`scroll-stack-card relative h-96 mx-auto my-8 rounded-[40px] shadow-[0_0_30px_rgba(0,0,0,0.1)] dark:shadow-[0_0_30px_rgba(160,160,160,0.1)] box-border origin-top ${itemClassName}`.trim()}
     style={{
       backfaceVisibility: "hidden",
-      // Remove preserve-3d for better performance
+      marginLeft: "auto",
+      marginRight: "auto",
       transition: 'none', // Explicitly disable transitions
       ...style,
     }}

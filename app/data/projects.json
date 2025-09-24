@@ -10,9 +10,9 @@
       "Automated reports and notifications",
       "Secure user authentication"
     ],
-    "image": "https://images.unsplash.com/photo-1596495577886-d920f5c6ec8b?q=80&w=2560&auto=format&fit=crop",
-    "githubUrl": "https://github.com/username/geolocation-attendance",
-    "liveUrl": "https://geolocation-attendance.vercel.app",
+    "image": "images/projects/Screenshot 2025-09-24 233623.png",
+    "githubUrl": "https://github.com/dharun36/geolocation-based-attendence",
+    "liveUrl": "https://geolocation-based-attendence-2.onrender.com",
     "category": "Web App"
   },
   {
@@ -26,9 +26,9 @@
       "Visualization of feature impact",
       "Model evaluation and performance metrics"
     ],
-    "image": "https://images.unsplash.com/photo-1573164574391-9a57f5a0df74?q=80&w=2560&auto=format&fit=crop",
-    "githubUrl": "https://github.com/username/credit-card-prediction",
-    "liveUrl": "https://credit-card-prediction.vercel.app",
+    "image": "images/projects/Gemini_Generated_Image_h2n9esh2n9esh2n9.png",
+    "githubUrl": "https://github.com/dharun36/credit-card-approval-prediction",
+    "liveUrl": "https://credit-card-approval-prediction-o9l8.onrender.com/",
     "category": "AI Application"
   },
   {
@@ -42,8 +42,8 @@
       "Crop management recommendations",
       "Offline-first and mobile-friendly interface"
     ],
-    "image": "https://images.unsplash.com/photo-1501004318641-b39e6451bec6?q=80&w=2560&auto=format&fit=crop",
-    "githubUrl": "https://github.com/username/farmer-assistant",
+    "image": "images/projects/Screenshot 2025-09-24 235932.png",
+    "githubUrl": "https://github.com/dharun36/agri-tech",
     "liveUrl": "https://farmer-assistant.vercel.app",
     "category": "Agriculture Tool"
   }

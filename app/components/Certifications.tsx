@@ -56,7 +56,7 @@ const CertificationCard: React.FC<{ certification: Certification; index: number 
         <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-1">
           {certification.title}
         </h3>
-        <p className="text-xs text-blue-600 dark:text-blue-400 mb-1">
+        <p className="text-xs text-gray-700 dark:text-gray-300 mb-1">
           {certification.issuer}
         </p>
 

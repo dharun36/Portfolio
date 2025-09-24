@@ -33,7 +33,7 @@ interface ContributionProps {
 
 const CodeContributions: React.FC<ContributionProps> = ({
   githubUsername = "dharun36",
-  leetcodeUsername = "23adr036",
+  leetcodeUsername = "dharun36",
   githubContributions = [],
 }) => {
   // Custom CSS for the LeetCode calendar

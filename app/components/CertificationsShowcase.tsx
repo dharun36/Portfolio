@@ -49,7 +49,7 @@ const CertificateCard: React.FC<{ certification: Certification; isActive: boolea
       className={`
         relative overflow-hidden rounded-lg shadow-md 
         ${isActive
-          ? 'border-l-4 border-blue-500 bg-blue-50 dark:bg-blue-900/20'
+          ? 'border-l-4 border-gray-600 dark:border-gray-400 bg-gray-50 dark:bg-gray-700/40'
           : 'border-l-4 border-transparent bg-white dark:bg-gray-800'}
         h-full flex flex-col p-3 ${!isActive ? 'animate-float' : ''}
         hover:bg-gray-100 dark:hover:bg-gray-700/60
@@ -73,7 +73,7 @@ const CertificateCard: React.FC<{ certification: Certification; isActive: boolea
 
       {/* Title and issuer */}
       <h3 className="font-medium text-sm text-gray-900 dark:text-white truncate mb-1">{certification.title}</h3>
-      <p className="text-xs text-blue-600 dark:text-blue-400 mb-1">{certification.issuer}</p>
+      <p className="text-xs text-gray-700 dark:text-gray-300 mb-1">{certification.issuer}</p>
 
       {/* Issue date */}
       <div className="flex items-center mt-auto text-xs text-gray-500 dark:text-gray-400">
@@ -81,6 +81,50 @@ const CertificateCard: React.FC<{ certification: Certification; isActive: boolea
         <span>{formatDate(certification.issueDate)}</span>
       </div>
     </motion.div>
+  );
+};
+
+// Responsive Tilt wrapper component
+const ResponsiveTilt: React.FC<{
+  children: React.ReactNode;
+  certificationId: number;
+  isMobile?: boolean;
+}> = ({ children, certificationId, isMobile = false }) => {
+  const tiltSettings = isMobile
+    ? {
+      tiltMaxAngleX: 4,
+      tiltMaxAngleY: 4,
+      scale: 1.02,
+      transitionSpeed: 250,
+      glareMaxOpacity: 0.1,
+    }
+    : {
+      tiltMaxAngleX: 8,
+      tiltMaxAngleY: 8,
+      scale: 1.05,
+      transitionSpeed: 400,
+      glareMaxOpacity: 0.2,
+    };
+
+  return (
+    <Tilt
+      key={certificationId}
+      tiltMaxAngleX={tiltSettings.tiltMaxAngleX}
+      tiltMaxAngleY={tiltSettings.tiltMaxAngleY}
+      scale={tiltSettings.scale}
+      transitionSpeed={tiltSettings.transitionSpeed}
+      tiltEnable={true}
+      glareEnable={true}
+      glareMaxOpacity={tiltSettings.glareMaxOpacity}
+      glareColor="#ffffff"
+      glarePosition="bottom"
+      glareBorderRadius="12px"
+      transitionEasing="cubic-bezier(.03,.98,.52,.99)"
+      style={{ transformStyle: "preserve-3d" }}
+      className="w-full h-full"
+    >
+      {children}
+    </Tilt>
   );
 };
 
@@ -94,102 +138,135 @@ const CertificateDetails: React.FC<{ certification: Certification }> = ({ certif
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 10, scale: 0.98 }}
-      animate={{ opacity: 1, y: 0, scale: 1 }}
-      exit={{ opacity: 0, y: -10, scale: 0.98 }}
+      key={certification.id}
+      initial={{ opacity: 0, y: 30, scale: 0.9, rotateX: 10 }}
+      animate={{ opacity: 1, y: 0, scale: 1, rotateX: 0 }}
+      exit={{ opacity: 0, y: -30, scale: 0.9, rotateX: -10 }}
       transition={{
-        duration: 0.5,
-        ease: [0.19, 1.0, 0.22, 1.0], // Smooth ease-out cubic bezier
-        opacity: { duration: 0.25 }  // Fade out faster than other properties
+        duration: 0.6,
+        ease: [0.25, 0.46, 0.45, 0.94], // More fluid easing
+        opacity: { duration: 0.4 },
+        scale: { duration: 0.5, ease: [0.34, 1.56, 0.64, 1] }, // Bouncy scale
+        y: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }
       }}
-      className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-xl h-full border border-gray-200 dark:border-gray-700"
-    >
-      {/* Background gradient with animation */}
+      className="bg-gradient-to-br from-gray-100 to-gray-300 dark:from-gray-800 dark:to-gray-900 rounded-xl shadow-xl h-full border border-gray-200 dark:border-gray-700 cursor-pointer relative group p-6 flex flex-col items-center justify-center text-center"
+    >        {/* Certificate Image */}
       <motion.div
-        className="h-12 sm:h-16"
-        initial={{ opacity: 0.7 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5 }}
-        style={{
-          background: "linear-gradient(to right, rgb(37, 99, 235), rgb(79, 70, 229))"
-        }}
-      ></motion.div>
-
-      <div className="p-3 sm:p-5 relative">
-        {/* Badge image overlapping the gradient with smooth animation */}
-        <motion.div
-          className="absolute -top-8 sm:-top-10 left-3 sm:left-5 bg-white dark:bg-gray-800 p-1.5 sm:p-2 rounded-lg shadow-lg badge-shine"
-          initial={{ y: 10, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{
-            delay: 0.1,
+        className="mb-6 flex items-center justify-center w-full"
+        whileHover={{
+          scale: 1.05,
+          rotate: 0.5,
+          transition: {
             duration: 0.4,
-            ease: [0.19, 1.0, 0.22, 1.0]
+            ease: [0.23, 1, 0.32, 1]
+          }
+        }}
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{
+          opacity: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] },
+          scale: { duration: 0.8, ease: [0.34, 1.56, 0.64, 1] }
+        }}
+      >
+        <img
+          src={certification.badgeUrl}
+          alt={certification.title}
+          className="w-full max-w-[500px] lg:max-w-[600px] h-auto max-h-[300px] lg:max-h-[350px] rounded-lg shadow-md object-contain transition-shadow duration-300 hover:shadow-xl"
+          onError={(e) => {
+            console.log('Image failed to load:', certification.badgeUrl);
+            e.currentTarget.style.display = 'none';
+          }}
+        />
+      </motion.div>
+
+      {/* Certificate Info */}
+      <motion.div
+        className="space-y-3"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{
+          duration: 0.6,
+          delay: 0.2,
+          ease: [0.25, 0.46, 0.45, 0.94]
+        }}
+      >
+        <motion.h3
+          className="text-xl font-bold text-gray-900 dark:text-white"
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{
+            duration: 0.5,
+            delay: 0.3,
+            ease: [0.23, 1, 0.32, 1]
+          }}
+          whileHover={{
+            scale: 1.05,
+            transition: { duration: 0.2 }
           }}
         >
-          <motion.img
-            src={certification.badgeUrl}
-            alt={certification.title}
-            className="w-12 h-12 sm:w-16 sm:h-16 object-contain"
-            initial={{ scale: 0.9, rotate: -5 }}
-            animate={{ scale: 1, rotate: 0 }}
-            transition={{ delay: 0.2, duration: 0.5, ease: "easeOut" }}
-          />
+          {certification.title}
+        </motion.h3>
+
+        <motion.p
+          className="text-gray-600 dark:text-gray-400 font-medium"
+          initial={{ opacity: 0, x: -15 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{
+            duration: 0.5,
+            delay: 0.4,
+            ease: [0.23, 1, 0.32, 1]
+          }}
+        >
+          {certification.issuer}
+        </motion.p>
+
+        <motion.div
+          className="flex items-center justify-center text-sm text-gray-500 dark:text-gray-400"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{
+            duration: 0.5,
+            delay: 0.5,
+            ease: [0.25, 0.46, 0.45, 0.94]
+          }}
+          whileHover={{
+            scale: 1.02,
+            transition: { duration: 0.2 }
+          }}
+        >
+          <FiCalendar className="mr-2" size={14} />
+          <span>Issued: {formatDate(certification.issueDate)}</span>
         </motion.div>
+      </motion.div>
 
-        {/* Title and details with proper spacing for the badge */}
-        <div className="mt-6 sm:mt-8">
-          <h2 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white line-clamp-2">{certification.title}</h2>
-          <p className="text-xs sm:text-sm text-blue-600 dark:text-blue-400 mb-2 sm:mb-3">{certification.issuer}</p>
+      {/* External link indicator */}
+      <motion.div
+        className="absolute top-4 right-4 opacity-60 group-hover:opacity-100 transition-opacity duration-300"
+        initial={{ opacity: 0, scale: 0, rotate: -45 }}
+        animate={{ opacity: 0.6, scale: 1, rotate: 0 }}
+        transition={{
+          duration: 0.8,
+          delay: 0.6,
+          ease: [0.34, 1.56, 0.64, 1]
+        }}
+        whileHover={{
+          scale: 1.2,
+          rotate: 12,
+          opacity: 1,
+          transition: {
+            duration: 0.2,
+            ease: [0.23, 1, 0.32, 1]
+          }
+        }}
+      >
+        <FiExternalLink className="text-gray-600 dark:text-gray-400" size={18} />
+      </motion.div>
 
-          <div className="grid grid-cols-2 gap-2 sm:gap-4 mb-3 sm:mb-4">
-            <div className="flex items-center">
-              <div className="bg-blue-100 dark:bg-blue-900/30 p-1.5 sm:p-2 rounded-full mr-2 sm:mr-3">
-                <FiCalendar className="text-blue-600 dark:text-blue-400" size={14} />
-              </div>
-              <div>
-                <p className="text-xs text-gray-500 dark:text-gray-400">Issued</p>
-                <p className="text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300">
-                  {formatDate(certification.issueDate)}
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-center">
-              <div className="bg-purple-100 dark:bg-purple-900/30 p-1.5 sm:p-2 rounded-full mr-2 sm:mr-3">
-                <FiAward className="text-purple-600 dark:text-purple-400" size={14} />
-              </div>
-              <div>
-                <p className="text-xs text-gray-500 dark:text-gray-400">Credential ID</p>
-                <p className="text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300">
-                  {certification.id}
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="mb-3 sm:mb-4">
-            <h3 className="text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 sm:mb-2">Skills & Expertise</h3>
-            <div className="flex flex-wrap gap-1 sm:gap-1.5">
-              {certification.skills.map((skill, idx) => (
-                <motion.span
-                  key={idx}
-                  initial={{ opacity: 0, y: 10, scale: 0.9 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  transition={{
-                    delay: idx * 0.05,
-                    duration: 0.3,
-                    ease: [0.19, 1.0, 0.22, 1.0]
-                  }}
-                  className="px-1.5 sm:px-2 py-0.5 sm:py-1 bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-md text-xs font-medium"
-                >
-                  {skill}
-                </motion.span>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
+      {/* Click handler */}
+      <div
+        className="absolute inset-0 md:w-3xl cursor-pointer"
+        onClick={() => window.open(certification.credentialUrl, '_blank')}
+      />
     </motion.div>
   );
 };
@@ -267,10 +344,6 @@ const CertificationsShowcase: React.FC = () => {
       className="w-full py-12 relative overflow-hidden"
     >
       {/* Background elements */}
-      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-        <div className="absolute top-1/3 left-1/4 w-72 h-72 bg-blue-600/10 dark:bg-blue-600/20 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/3 right-1/4 w-96 h-96 bg-purple-600/10 dark:bg-purple-600/20 rounded-full blur-3xl" />
-      </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10 lg:max-w-5xl">
         {/* Heading with animated underline */}
@@ -292,69 +365,87 @@ const CertificationsShowcase: React.FC = () => {
           </motion.div>
         </div>
 
-        {/* Mobile selector - Horizontal scrollable thumbnails */}
+        {/* Mobile selector - Enhanced organization */}
         <div className="lg:hidden mb-6">
-          <div className="flex justify-between items-center mb-3">
-            <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400">Select certificate:</h3>
-            <div className="flex space-x-2">
-              <motion.button
-                onClick={handlePrevious}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="p-1.5 rounded-md bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 flex items-center"
-                aria-label="Previous certificate"
-              >
-                <FiChevronLeft size={16} />
-              </motion.button>
-              <motion.button
-                onClick={handleNext}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="p-1.5 rounded-md bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 flex items-center"
-                aria-label="Next certificate"
-              >
-                <FiChevronRight size={16} />
-              </motion.button>
+          <div className="bg-white/5 dark:bg-black/20 rounded-xl p-4 border border-gray-200/20 dark:border-gray-700/30">
+            <div className="flex justify-between items-center mb-4">
+              <div>
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white flex items-center">
+                  <div className="w-2 h-2 bg-blue-500 rounded-full mr-3"></div>
+                  Certifications
+                </h3>
+                <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                  {selectedCertIndex + 1} of {certificationsData.length} selected
+                </p>
+              </div>
+              <div className="flex space-x-2">
+                <motion.button
+                  onClick={handlePrevious}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="p-2 rounded-lg bg-gray-200/50 dark:bg-gray-700/50 hover:bg-gray-300/50 dark:hover:bg-gray-600/50 text-gray-700 dark:text-gray-300 transition-all duration-200"
+                  aria-label="Previous certificate"
+                >
+                  <FiChevronLeft size={18} />
+                </motion.button>
+                <motion.button
+                  onClick={handleNext}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="p-2 rounded-lg bg-gray-200/50 dark:bg-gray-700/50 hover:bg-gray-300/50 dark:hover:bg-gray-600/50 text-gray-700 dark:text-gray-300 transition-all duration-200"
+                  aria-label="Next certificate"
+                >
+                  <FiChevronRight size={18} />
+                </motion.button>
+              </div>
+            </div>
+
+            {/* Enhanced Thumbnail indicators */}
+            <div className="flex justify-center space-x-2 mb-4 p-2 bg-white/10 dark:bg-black/20 rounded-lg">
+              {certificationsData.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setSelectedCertIndex(index)}
+                  className={`transition-all duration-300 rounded-full ${index === selectedCertIndex
+                    ? 'w-8 h-3 bg-blue-500 shadow-lg'
+                    : 'w-3 h-3 bg-gray-400 dark:bg-gray-600 hover:bg-gray-500 dark:hover:bg-gray-500'
+                    }`}
+                  aria-label={`Select certificate ${index + 1}`}
+                />
+              ))}
             </div>
           </div>
 
-          {/* Thumbnail indicators */}
-          <div className="flex justify-center space-x-1 mb-4">
-            {certificationsData.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setSelectedCertIndex(index)}
-                className={`w-2 h-2 rounded-full transition-all duration-300 ${index === selectedCertIndex
-                  ? 'bg-blue-500 w-4'
-                  : 'bg-gray-300 dark:bg-gray-600'
-                  }`}
-                aria-label={`Select certificate ${index + 1}`}
-              />
-            ))}
-          </div>
-
           {/* Current certification display */}
-          <div className="px-2">
-            <AnimatePresence mode="wait" initial={false}>
-              <CertificateDetails
-                key={certificationsData[selectedCertIndex].id}
-                certification={certificationsData[selectedCertIndex]}
-              />
+          <div className="px-2 mt-4 h-[500px]">
+            <AnimatePresence mode="wait">
+              <ResponsiveTilt
+                certificationId={certificationsData[selectedCertIndex].id}
+                isMobile={true}
+              >
+                <CertificateDetails
+                  key={certificationsData[selectedCertIndex].id}
+                  certification={certificationsData[selectedCertIndex]}
+                />
+              </ResponsiveTilt>
             </AnimatePresence>
           </div>
-        </div>
-
-        {/* Desktop layout - Grid with list and details */}
+        </div>              {/* Desktop layout - Grid with list and details */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="hidden lg:grid lg:grid-cols-4 lg:gap-6"
+          className="hidden lg:grid lg:grid-cols-5 lg:gap-6"
         >
           {/* Certificate list - Desktop only */}
-          <div className="col-span-1">
-            <div className="relative">
-              <div className="flex flex-col gap-2 mb-2 max-h-[420px] overflow-y-auto pr-1 scrollbar-thin">
+          <div className="col-span-2">
+            <div className="bg-white/5 dark:bg-black/20 rounded-xl p-4 border border-gray-200/20 dark:border-gray-700/30">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
+                <div className="w-2 h-2 bg-blue-500 rounded-full mr-3"></div>
+                Certifications ({certificationsData.length})
+              </h3>
+
+              <div className="space-y-2 max-h-[350px] overflow-y-auto pr-2 scrollbar-thin">
                 {certificationsData.map((cert, index) => (
                   <motion.div
                     key={cert.id}
@@ -371,50 +462,54 @@ const CertificationsShowcase: React.FC = () => {
                   </motion.div>
                 ))}
               </div>
-              {/* Navigation controls */}
-              <div className="flex justify-between mt-3">
-                <motion.button
-                  onClick={handlePrevious}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="p-2 rounded-md bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 transition-colors flex items-center text-xs"
-                  aria-label="Previous certificate"
-                >
-                  <FiChevronLeft size={14} className="mr-1" /> Previous
-                </motion.button>
-                <motion.button
-                  onClick={handleNext}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="p-2 rounded-md bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 transition-colors flex items-center text-xs"
-                  aria-label="Next certificate"
-                >
-                  Next <FiChevronRight size={14} className="ml-1" />
-                </motion.button>
+
+              {/* Enhanced Navigation controls */}
+              <div className="mt-4 pt-4 border-t border-gray-200/20 dark:border-gray-700/30">
+                <div className="flex justify-between items-center">
+                  <motion.button
+                    onClick={handlePrevious}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="flex items-center px-3 py-2 rounded-lg bg-gray-200/50 dark:bg-gray-700/50 hover:bg-gray-300/50 dark:hover:bg-gray-600/50 text-gray-700 dark:text-gray-300 transition-all duration-200 text-sm font-medium"
+                    aria-label="Previous certificate"
+                  >
+                    <FiChevronLeft size={16} className="mr-1" />
+                    Previous
+                  </motion.button>
+
+                  <div className="flex items-center space-x-1">
+                    <span className="text-sm text-gray-600 dark:text-gray-400">
+                      {selectedCertIndex + 1} of {certificationsData.length}
+                    </span>
+                  </div>
+
+                  <motion.button
+                    onClick={handleNext}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="flex items-center px-3 py-2 rounded-lg bg-gray-200/50 dark:bg-gray-700/50 hover:bg-gray-300/50 dark:hover:bg-gray-600/50 text-gray-700 dark:text-gray-300 transition-all duration-200 text-sm font-medium"
+                    aria-label="Next certificate"
+                  >
+                    Next
+                    <FiChevronRight size={16} className="ml-1" />
+                  </motion.button>
+                </div>
               </div>
             </div>
           </div>
 
-          {/* Certificate details - Desktop */}
+          {/* Certificate details - Desktop with Responsive Tilt */}
           <div className="col-span-3 h-full relative">
-            <AnimatePresence mode="wait" initial={false}>
-              <Tilt
-                key={certificationsData[selectedCertIndex].id}
-                tiltMaxAngleX={5}
-                tiltMaxAngleY={5}
-                scale={1.02}
-                transitionSpeed={300}
-                tiltEnable={true}
-                glareEnable={false}
-                transitionEasing="cubic-bezier(.03,.98,.52,.99)"
-                style={{ transformStyle: "preserve-3d" }}
-                className="w-full h-full"
+            <AnimatePresence mode="wait">
+              <ResponsiveTilt
+                certificationId={certificationsData[selectedCertIndex].id}
+                isMobile={false}
               >
                 <CertificateDetails
                   key={certificationsData[selectedCertIndex].id}
                   certification={certificationsData[selectedCertIndex]}
                 />
-              </Tilt>
+              </ResponsiveTilt>
             </AnimatePresence>
           </div>
         </motion.div>

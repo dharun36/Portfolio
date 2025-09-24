@@ -2,7 +2,8 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa';
+import { FaGithub, FaLinkedin } from 'react-icons/fa';
+import { SiLeetcode } from 'react-icons/si';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -28,10 +29,10 @@ export default function Footer() {
               aria-label="LinkedIn profile">
               <FaLinkedin size={20} />
             </Link>
-            <Link href="https://twitter.com/"
+            <Link href="https://leetcode.com/u/dharun36/"
               className="text-gray-600 hover:text-primary dark:text-gray-400 dark:hover:text-white transition-colors"
-              aria-label="Twitter profile">
-              <FaTwitter size={20} />
+              aria-label="LeetCode profile">
+              <SiLeetcode size={20} />
             </Link>
           </div>
         </div>
